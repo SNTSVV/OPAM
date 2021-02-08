@@ -37,8 +37,8 @@ done
 
 
 # Collecting results
-${CMD_PREFIX} ./python.sh --virtual venv/bin/python3  scripts/Python/ResultCollector.py -f merge_fitness -t results/${CODE}/${EXP_NAME} -o fitness.csv
-${CMD_PREFIX} ./python.sh --virtual venv/bin/python3  scripts/Python/ResultCollector.py -f merge_time -t results/${CODE}/${EXP_NAME} -o timeinfo.csv
+${CMD_PREFIX} python3  scripts/Python/ResultCollector.py -f merge_fitness -t results/${CODE}/${EXP_NAME} -o fitness.csv
+${CMD_PREFIX} python3  scripts/Python/ResultCollector.py -f merge_time -t results/${CODE}/${EXP_NAME} -o timeinfo.csv
 
 
 

@@ -25,7 +25,7 @@ ${CMD_PREFIX} java -jar artifacts/OPAM.jar --runCnt ${NUM_RUNS} -w ${CODE}/${SUB
 
 
 # Collecting results
-#${CMD_PREFIX} ./python.sh --virtual venv/bin/python3  scripts/Python/ScheduleAnalyzer.py -t results/${CODE} -o schedule_${CODE}.csv
+#${CMD_PREFIX} python3  scripts/Python/ScheduleAnalyzer.py -t results/${CODE} -o schedule_${CODE}.csv
 
 
 

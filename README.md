@@ -28,28 +28,27 @@ OPAM runs on the following operating systems:
 
 
 ### How to run OPAM?
-* Step 0: Setting parameters on settings.json
+* Step 0: Set parameters on *settings.json*
 * Step 1: Run *run.sh*
-* Step 2: See output files in results/OPAM
+* Step 2: See output files in *results/OPAM*
 
-The settings.json contains default parameter values that used in the paper. The parameters also can be set from command line arguments of OPAM. The run.sh file shows the order of execution and how to set parameters. It produces test data first and conducts OPAM. Note that due to the randomness of OPAM, we repeat our experiments 50 times as a default. To collect all experiments results, you can use python script as the last line of the script.
+The *settings.json* contains default parameter values that used in the paper. The parameters also can be set from command line arguments of OPAM. The *run.sh* file shows the order of execution and how to set parameters. It produces test data first and conducts OPAM. Note that due to the randomness of OPAM, we repeat our experiments 50 times as a default. To collect all experiment results, you can use python script as the last line of the script.
 
 
 ### How to run experiments?
 
 ##### =EXP1=
-* Step 0: Setting parameters through *settings.json*
-* Step 1: Run *exp1.sh*
-* Step 3: Repeating Step 1 for each subject
-* Step 4: Collecting result data 
-* Step 5: Evaluating result data 
-* Step 6: See output files in *results/RQ1_OPAM* and *results/RQ1_RS*
+* Step 0: Set common parameters through *settings.json*
+* Step 1: Run *exp1.sh* for each subject
+* Step 2: Collect result data 
+* Step 3: Evaluate result data 
+* Step 4: See output files in *results/RQ1_OPAM* and *results/RQ1_RS*
 
-EXP1 compares OPAM with naive random search (RS) for given six industrial subjects. Before you start, you can set common parameter values for all experiments through settings.json. The script exp1.sh shows an example commands with ESAIL subject. It contains three commands that are generating test data and conducting OPAM and RS. For the other subjects, you can conduct them by changing SUBJECT_NAME, NCPU, SIM_TIME, and TIME_QUANTA in the script according to each subject's properties. After finishing running the experiments, you can collect and evaluate results data. An example of commands for those steps can be found in the commented lines below the script exp1.sh. 
+EXP1 compares OPAM with naive random search (RS) for given six industrial subjects. Before you start, you can set common parameter values for all experiments through *settings.json*. The script *exp1.sh* shows an example commands with ESAIL subject. It contains three commands that are generating test data and conducting OPAM and RS. For the other subjects, you can conduct them by changing SUBJECT_NAME, NCPU, SIM_TIME, and TIME_QUANTA in the script according to each subject's properties. After finishing running the experiments, you can collect and evaluate results data. The example of commands for those steps can be found in the commented lines below the script *exp1.sh*. 
 
 
 ##### =EXP2=
-* Step 0: Setting parameters through settings.json
+* Step 0: Set common parameters through *settings.json*
 * Step 1: Run *exp2.gen.sh*
 * Step 2: Run *exp2.1.sh*
 * Step 3: Run *exp2.2.sh*
@@ -57,11 +56,12 @@ EXP1 compares OPAM with naive random search (RS) for given six industrial subjec
 * Step 5: Run *exp2.4.sh*
 * Step 6: See output files in *results/RQ2*
 
-EXP2 investigates the scalability of OPAM by conducting some experiments with systems of various sizes, including six industrial and several synthetic subjects. Following EXP1, you already have the result of the industrial subjects, thus, you will conduct additional experiments with synthetic subjects in EXP2. For the common parameter values, use the settings.json. In Step 1, the *exp2.gen.sh* creates synthetic task sets following our experiment design which contains four sub-experiments. In the following four steps, *exp2.1.sh* and *exp2.4.sh* are mapped with each sub-experiment. Each script shows the order of experiments and parameters like *exp1.sh*. As we repeat our experiments 50 times, we recommend you do conduct those experiments on multiple nodes. 
+EXP2 investigates the scalability of OPAM by conducting some experiments with systems of various sizes, including six industrial and several synthetic subjects. Following EXP1, you already have the result of the industrial subjects, thus, you will conduct additional experiments with synthetic subjects in EXP2. For the common parameter values, use the *settings.json*. The *exp2.gen.sh* creates synthetic task sets following our experiment design which contains four sub-experiments. The scripts *exp2.1.sh* ~ *exp2.4.sh* are mapped with each sub-experiment. Each script shows the order of experiments and parameters like *exp1.sh*. As we repeat our experiments 50 times, we recommend you do conduct those experiments on multiple nodes. 
 
 
 ##### =EXP3=
-* Step 1: Run *exp3.sh*
+* Step 0: Set common parameters through *settings.json*
+* Step 1: Running *exp3.sh*
 * Step 2: See output files in *results/RQ3*
 
 EXP3 compares the quality of priority assignments generated by OPAM with those defined by engineers. The *exp3.sh* shows example commands for the EXP3. It contains three commands. The first two commands which generate test data and execute OPAM are similar to *exp1.sh*. If you run *exp1.sh* with the option "--printFinal", you do not need to run those steps. The last command is the python script to generate statistical data of safety margins from the result of OPAM. 
