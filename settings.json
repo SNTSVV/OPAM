@@ -1,0 +1,49 @@
+{
+  // Common variables
+  "INPUT_FILE"          : "res/emperical/GAP.csv",
+  "BASE_PATH"           : "results",
+  "WORKNAME"            : "TestEXP",
+  "RUN_NUM"             : 0,
+  "RUN_START"           : 1,
+  "RUN_CNT"             : 50,
+  "CYCLE_NUM"           : 1000,
+  "RANDOM_PRIORITY"     : false,
+
+  // Scheduler variables
+  "SCHEDULER"           : "SQMScheduler",
+  "TARGET_TASKLIST"     : "",    // comma(,) separated list
+  "TIME_QUANTA"         : 0.1,
+  "TIME_MAX"            : 60000, // 60 seconds
+  "ALLOW_OFFSET_RANGE"  : false,
+  "EXTEND_SIMULATION_TIME": true,
+  "EXTEND_SCHEDULER"    : true,
+  "FD_BASE"             : 2,
+  "FD_EXPONENT"         : 100,
+
+  // Genetic algorithm variables
+  "P1_POPULATION"       : 10,
+  "P1_ITERATION"        : 1,
+  "P1_CROSSOVER_PROB"   : 0.8,
+  "P1_MUTATION_PROB"    : 0,
+  "P1_GROUP_FITNESS"    : "average",  // "maximum", "minimum", "average"
+  "P1_ALGORITHM"         : "SSGA",
+
+  // Printing Setting
+  "PRINT_FITNESS"       : true,
+  "PRINT_DETAILS"       : false,
+  "PRINT_FINAL_DETAIL"  : false,
+
+  // Genetic algorithm variables
+  "P2_POPULATION"       : 10,
+  "P2_ITERATIONS"       : 1,
+  "P2_CROSSOVER_PROB"   : 0.8,
+  "P2_MUTATION_PROB"    : 0,
+  "P2_GROUP_FITNESS"    : "average",  // "maximum", "minimum", "average"
+  "P2_SIMPLE_SEARCH"    : false,
+
+  // Test data
+  "TEST_GENERATION"     : "",     // "", Random, Initial
+  "TEST_PATH"           : "",
+  "NUM_TEST"            : 100,
+  "NOLIMIT_POPULATION"  : false
+}
