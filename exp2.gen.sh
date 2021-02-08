@@ -15,7 +15,7 @@
 #    --granularity <integer>: granularity of task period, default=10
 #    --priority <RM | ENGINEER>: initial priority assignment policy, default=RM (rate-monotonic)
 #    --minArrival <float>: range factor to determine minimum inter-arrival times, default=1.0
-#    --minArrival <float>: range factor to determine minimum inter-arrival times, default=1.0
+
 
 N_TASKSETS=10
 SIM_TIME=2000
