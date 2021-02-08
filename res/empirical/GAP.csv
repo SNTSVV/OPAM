@@ -1,0 +1,24 @@
+﻿Task ID,Task Name,Task Type,Task Priority,Offset,WCET min,WCET max,Task Period (ms),Minimum interarrival-time (ms),Maximum Interarrival time,Task Deadline,Deadline Type,Dependency,Trigger
+1,j0,Periodic,3,0,2,2,33,-1,-1,33,Hard,,2;3;4
+2,j1,Periodic,3,0,2,2,33,-1,-1,33,Hard,1,
+3,j2,Periodic,3,0,1,1,33,-1,-1,33,Hard,2,
+4,j3,Periodic,3,0,1,1,20,-1,-1,20,Hard,2,
+5,j4,Periodic,3,0,1,1,20,-1,-1,20,Hard,1,
+6,j5,Aperiodic,3,0,1,1,15,15,100,10,Soft,1,
+7,j6,Aperiodic,3,0,1,1,15,15,100,50,Soft,,6
+8,j7,Aperiodic,2,0,2,2,15,15,100,100,Soft,,
+9,j8,Aperiodic,3,0,1,1,15,15,100,5,Soft,,
+10,j9,Periodic,2,0,2,2,20,-1,-1,20,Hard,,3
+11,j10,Periodic,2,0,2,2,20,-1,-1,20,Hard,3,
+12,j11,Periodic,2,0,2,2,20,-1,-1,20,Hard,3,
+13,j12,Aperiodic,1,0,1,1,15,15,100,50,Soft,4,
+14,j13,Aperiodic,1,0,1,1,15,15,100,50,Soft,4,
+15,j14,Periodic,2,0,1,1,50,-1,-1,50,Hard,5,
+16,j15,Aperiodic,3,0,1,1,15,15,100,25,Soft,5,
+17,j16,Periodic,1,0,2,2,100,-1,-1,100,Hard,,
+18,j17,Aperiodic,2,0,1,1,15,15,100,100,Soft,,
+19,j18,Periodic,3,0,2,2,150,-1,-1,150,Hard,,
+20,j19,Periodic,3,0,1,1,150,-1,-1,150,Hard,,
+21,j20,Periodic,3,0,3,3,150,-1,-1,150,Hard,,
+22,j21,Periodic,3,0,1,1,150,-1,-1,150,Hard,,
+23,j22,Periodic,3,0,1,1,150,-1,-1,150,Hard,,

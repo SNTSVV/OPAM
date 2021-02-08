@@ -1,0 +1,7 @@
+﻿Task ID,Task Name,Task Type,Task Priority,Offset,WCET min,WCET max,Task Period (ms),Minimum interarrival-time (ms),Maximum Interarrival time,Task Deadline,Deadline Type,Dependency,Trigger
+1,j0,Aperiodic,500,0,9,9,30,30,150,15,Soft,1,
+2,j1,Aperiodic,400,0,9,9,30,30,150,20,Soft,2,
+3,j2,Aperiodic,300,0,5,5,30,30,150,20,Soft,1,
+4,j3,Periodic,200,0,5,5,80,-1,-1,25,Hard,2,
+5,j4,Periodic,100,0,7,7,80,-1,-1,40,Hard,3,
+6,j5,Periodic,100,0,7,7,80,-1,-1,40,Hard,3,
