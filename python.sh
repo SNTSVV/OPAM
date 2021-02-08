@@ -7,7 +7,7 @@
 
 DRY_RUN=0
 PARAMS=""
-VENV_PATH=~/projects/OPAM/venv/bin/python3
+VENV_PATH=venv/bin/python3
 
 # Parse the command-line argument
 while [ $# -ge 1 ]; do

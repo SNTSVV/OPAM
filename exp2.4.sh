@@ -1,7 +1,7 @@
 #!/bin/bash -l
 
 ## define variables
-CMD_PREFIX="echo"    # Please set "echo" to test
+CMD_PREFIX="echo"    # Please make "echo" to "" for actual running
 CODE="RQ2"
 
 NUM_RUNS=50

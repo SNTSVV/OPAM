@@ -1,12 +1,13 @@
 {
   // Common variables
-  "INPUT_FILE"          : "res/emperical/GAP.csv",
+  "INPUT_FILE"          : "res/empirical/ESAIL.csv",
   "BASE_PATH"           : "results",
   "WORKNAME"            : "TestEXP",
   "RUN_NUM"             : 0,
   "RUN_START"           : 1,
   "RUN_CNT"             : 50,
   "CYCLE_NUM"           : 1000,
+  "N_CPUS"              : 1,
   "RANDOM_PRIORITY"     : false,
 
   // Scheduler variables

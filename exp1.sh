@@ -1,16 +1,16 @@
 #!/bin/bash -l
 
 ## define variables
-CMD_PREFIX=""    # Please set "echo" to test
+CMD_PREFIX="echo"    # Please make "echo" to "" for actual running
 CODE="RQ1"
 
 NUM_RUNS=50
 NUM_TEST=10
-SUBJECT_NAME="CCS"   # Subject name
-NCPU=2               # Number of CPUs, Use a different number depends on the subject
-SIM_TIME=0           # Simulation time, only ESAIL has specified simulation time as 60000
-TIME_QUANTA=1        # Unit of time, only ESAIL uses 0.1ms otherwise, 1
-OPTION='--printFinal' # Use it for RQ3, this option will print out the detailed schedule results
+SUBJECT_NAME="ESAIL"  # Subject name
+NCPU=1                # Number of CPUs, Use a different number depends on the subject
+SIM_TIME=6000         # Simulation time, only ESAIL has specified simulation time as 60000
+TIME_QUANTA=0.1       # Unit of time, only ESAIL uses 0.1ms otherwise, 1
+OPTION=''             # This variable is used for RQ3
 
 # Path settings
 TESTPOOL="TestPool/${CODE}/${SUBJECT_NAME}"

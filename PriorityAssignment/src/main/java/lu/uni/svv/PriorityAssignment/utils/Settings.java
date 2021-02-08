@@ -19,6 +19,7 @@ public class Settings {
 	public static int     RUN_START           = 1;
 	public static int     RUN_CNT             = 0;
 	public static int     CYCLE_NUM           = 1;
+	public static int     N_CPUS              = 1;
 	public static boolean RANDOM_PRIORITY     = false;
 	
 	// Scheduler
@@ -35,7 +36,6 @@ public class Settings {
 	public static double  FD_EXPONENT         = 10000;
 	public static int     MAX_OVER_DEADLINE   = 0;  // 60000, base unit ms
 	public static boolean VERIFY_SCHEDULE     = false;
-	public static int     N_CPUS              = 1;
 
 	// Phase1 GA
 	public static int     P1_POPULATION       = 10;
@@ -84,6 +84,7 @@ public class Settings {
 		parser.addOption(false,"WORKNAME", DataType.STRING, "w", "workName", "the path for saving workdata in second phase");
 		parser.addOption(false,"RUN_NUM", DataType.INTEGER, null, "runID", "Specific run ID when you execute run separately");
 		parser.addOption(false,"CYCLE_NUM", DataType.INTEGER, null, "cycle", "Specific run ID when you execute run separately");
+		parser.addOption(false,"N_CPUS", DataType.INTEGER, null, "cpus", "the number of CPUs");
 		parser.addOption(false,"RANDOM_PRIORITY", DataType.BOOLEAN, null, "random", "random priority");
 		parser.addOption(false,"RUN_START", DataType.INTEGER, null, "runStart", "starting number of run ID");
 		parser.addOption(false,"RUN_CNT", DataType.INTEGER, null, "runCnt", "number of runs");
@@ -100,7 +101,6 @@ public class Settings {
 		parser.addOption(false,"FD_BASE", DataType.DOUBLE, null, "base", "base for F_D calculation");
 		parser.addOption(false,"FD_EXPONENT", DataType.DOUBLE, null, "exponent", "exponent for F_D calculation");
 		parser.addOption(false,"MAX_OVER_DEADLINE", DataType.INTEGER, null, "maxMissed", "The maximum value for the one execution's deadline miss(e-d)");
-		parser.addOption(false,"N_CPUS", DataType.INTEGER, null, "cpus", "the number of CPUs");
 		parser.addOption(false,"VERIFY_SCHEDULE", DataType.BOOLEAN, null, "verifySchedule", "Do verification process of schedule result when it set");
 		
 		// Phase 1 GA
