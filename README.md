@@ -50,13 +50,10 @@ EXP1 compares OPAM with naive random search (RS) for given six industrial subjec
 ##### =EXP2=
 * Step 0: Set common parameters through *settings.json*
 * Step 1: Run *exp2.gen.sh*
-* Step 2: Run *exp2.1.sh*
-* Step 3: Run *exp2.2.sh*
-* Step 4: Run *exp2.3.sh*
-* Step 5: Run *exp2.4.sh*
-* Step 6: See output files in *results/RQ2*
+* Step 2: Run *exp2.1.sh* ~ *exp2.4.sh* 
+* Step 3: See output files in *results/RQ2*
 
-EXP2 investigates the scalability of OPAM by conducting some experiments with systems of various sizes, including six industrial and several synthetic subjects. Following EXP1, you already have the result of the industrial subjects, thus, you will conduct additional experiments with synthetic subjects in EXP2. For the common parameter values, use the *settings.json*. The *exp2.gen.sh* creates synthetic task sets following our experiment design which contains four sub-experiments. The scripts *exp2.1.sh* ~ *exp2.4.sh* are mapped with each sub-experiment. Each script shows the order of experiments and parameters like *exp1.sh*. As we repeat our experiments 50 times, we recommend you do conduct those experiments on multiple nodes. 
+EXP2 investigates the scalability of OPAM by conducting some experiments with systems of various sizes, including six industrial and several synthetic subjects. Following EXP1, you already have the result of the industrial subjects, thus, you will conduct additional experiments with synthetic subjects in EXP2. For the common parameter values, use the *settings.json*. The *exp2.gen.sh* creates synthetic task sets following our experiment design which contains four sub-experiments. The scripts *exp2.1.sh* ~ *exp2.4.sh* are mapped with each sub-experiment. Each script shows the order of experiments and parameters like *run.sh*. As we repeat our experiments 50 times, we recommend you do conduct those experiments on multiple nodes. 
 
 
 ##### =EXP3=
