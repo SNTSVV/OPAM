@@ -58,9 +58,9 @@ class ResultColllector():
 
     def merge_time(self, _dirpath, _outputname=None, _exptions=None):
         if _outputname is None:
-            _outputname = 'timeinfo.csv'
+            _outputname = os.path.join(_dirpath, 'timeinfo.csv')
 
-        output = open(os.path.join(_dirpath, _outputname), "w")
+        output = open(_outputname, "w")
         output.write("Variable,Index,Run,Total,Search,P1,P2,Ex,InitHeap,UsedHeap,CommitHeap,MaxHeap,MaxNonHeap\n")
 
         targets = self.expandDirs([{'path':_dirpath}], 'Variable')
@@ -95,14 +95,14 @@ class ResultColllector():
 
     def merge_time_industrial(self, _dirpath, _outputname=None, _exptions=None):
         if _outputname is None:
-            _outputname = 'timeinfo.csv'
+            _outputname = os.path.join(_dirpath, 'timeinfo.csv')
 
         # prepare target dirs
         targets = self.expandDirs([{'path':_dirpath}], 'Variable', _ptn=r'\w+')
         targets = self.expandDirs(targets, 'Run', _ptn=r'\d+')
 
         # prepare output file
-        output = open(os.path.join(_dirpath, _outputname), "w")
+        output = open(_outputname, "w")
         output.write("Variable,Index,Run,Total,Search,P1,P2,Ex,InitHeap,UsedHeap,CommitHeap,MaxHeap,MaxNonHeap\n")
 
         progress = tqdm(desc='Collecting data', total=len(targets), unit=' #', postfix=None)
@@ -158,7 +158,7 @@ class ResultColllector():
 
     def merge_fitness(self, _dirpath, _outputname=None, _exptions=None):
         if _outputname is None:
-            _outputname = 'fitness.csv'
+            _outputname = os.path.join(_dirpath, 'fitness.csv')
 
         # preparing target dirs
         targets = self.expandDirs([{'path':_dirpath}], 'Variable')
@@ -191,14 +191,14 @@ class ResultColllector():
 
     def merge_fitness_industrial(self, _dirpath, _outputname=None, _exptions=None):
         if _outputname is None:
-            _outputname = 'fitness.csv'
+            _outputname = os.path.join(_dirpath, 'fitness.csv')
 
         # preparing target dirs
         targets = self.expandDirs([{'path':_dirpath}], 'Variable', _ptn=r'\w+')  # subject level folder
         targets = self.expandDirs(targets, 'Run', _ptn=r'\d+')
 
         # preparing output file
-        output = open(os.path.join(_dirpath, _outputname), "w")
+        output = open(_outputname, "w")
         firstWork = True
         index = 0
 
