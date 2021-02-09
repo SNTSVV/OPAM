@@ -38,9 +38,7 @@ OPAM runs on the following operating systems:
 ##### =EXP1=
 * Step 0: Set common parameters through *settings.json*
 * Step 1: Run *exp1.sh* for each subject
-* Step 2: Collect result data 
-* Step 3: Evaluate result data 
-* Step 4: See output files in *results/RQ1_OPAM* and *results/RQ1_RS*
+* Step 2: See output files in *results/RQ1_OPAM* and *results/RQ1_RS*
 
 
 ##### =EXP2=
