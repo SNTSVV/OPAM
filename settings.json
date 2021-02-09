@@ -1,6 +1,6 @@
 {
   // Common variables
-  "INPUT_FILE"          : "res/empirical/ESAIL.csv",
+  "INPUT_FILE"          : "res/industrial/ESAIL.csv",
   "BASE_PATH"           : "results",
   "WORKNAME"            : "TestEXP",
   "RUN_NUM"             : 0,

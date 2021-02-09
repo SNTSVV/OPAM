@@ -14,7 +14,7 @@ OPTION=''            # Add additional option as you need
 
 # Path settings
 TESTPOOL="TestPool/${CODE}/${SUBJECT_NAME}"
-RESOURCE="res/empirical/${SUBJECT_NAME}.csv"
+RESOURCE="res/industrial/${SUBJECT_NAME}.csv"
 
 # Generate test arrivals (Adaptive random search)
 ${CMD_PREFIX} java -jar artifacts/OPAM.jar -w ${TESTPOOL} --data ${RESOURCE} --max ${SIM_TIME} --quanta ${TIME_QUANTA} --numTest ${NUM_TEST} --cycle 1 --workType Adaptive
@@ -24,6 +24,6 @@ ${CMD_PREFIX} java -jar artifacts/OPAM.jar -w ${TESTPOOL} --data ${RESOURCE} --m
 ${CMD_PREFIX} java -jar artifacts/OPAM.jar --runCnt ${NUM_RUNS} -w ${CODE}_OPAM/${SUBJECT_NAME} --data ${RESOURCE} --testPath ${TESTPOOL}/test.list --max ${SIM_TIME} --quanta ${TIME_QUANTA} --numTest ${NUM_TEST} --cpus ${NCPU} --maxMissed 1000 ${OPTION}
 
 # Collecting results
-${CMD_PREFIX} python3 scripts/Python/ResultCollector.py -f merge_fitness_empirical -t results/${CODE}_OPAM -o fitness_${CODE}.csv
+${CMD_PREFIX} python3 scripts/Python/ResultCollector.py -f merge_fitness_industrial -t results/${CODE}_OPAM -o fitness_${CODE}.csv
 
 

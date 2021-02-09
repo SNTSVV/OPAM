@@ -14,7 +14,7 @@ OPTION='--printFinal' # To produce the detailed schedule results
 
 # Path settings
 TESTPOOL="TestPool/${CODE}/${SUBJECT_NAME}"
-RESOURCE="res/empirical/${SUBJECT_NAME}.csv"
+RESOURCE="res/industrial/${SUBJECT_NAME}.csv"
 
 # Generate test arrivals (Adaptive random search)
 ${CMD_PREFIX} java -jar artifacts/OPAM.jar -w ${TESTPOOL} --data ${RESOURCE} --max ${SIM_TIME} --quanta ${TIME_UNIT} --numTest ${NUM_TEST} --cycle 1 --workType Adaptive ${OPTION}

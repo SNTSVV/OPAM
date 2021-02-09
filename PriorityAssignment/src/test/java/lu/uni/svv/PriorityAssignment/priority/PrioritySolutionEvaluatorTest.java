@@ -21,7 +21,7 @@ public class PrioritySolutionEvaluatorTest extends TestCase {
 	public void init() throws Exception{
 		// Environment Settings
 		Settings.update(new String[] {});
-		Settings.INPUT_FILE = "res/empirical/GAP.csv";
+		Settings.INPUT_FILE = "res/industrial/GAP.csv";
 		Settings.WORKNAME = "TEST/GAP";
 		Settings.TIME_MAX = 0;
 		Settings.TIME_QUANTA = 1;

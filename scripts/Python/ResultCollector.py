@@ -93,7 +93,7 @@ class ResultColllector():
             progress.close()
         output.close()
 
-    def merge_time_empirical(self, _dirpath, _outputname=None, _exptions=None):
+    def merge_time_industrial(self, _dirpath, _outputname=None, _exptions=None):
         if _outputname is None:
             _outputname = 'timeinfo.csv'
 
@@ -189,7 +189,7 @@ class ResultColllector():
             progress.close()
         output.close()
 
-    def merge_fitness_empirical(self, _dirpath, _outputname=None, _exptions=None):
+    def merge_fitness_industrial(self, _dirpath, _outputname=None, _exptions=None):
         if _outputname is None:
             _outputname = 'fitness.csv'
 
