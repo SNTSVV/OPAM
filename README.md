@@ -1,6 +1,6 @@
 # OPAM
 
-OPAM (Optimal Priority Assignment Method for real-time tasks) is a tool for optimally assigning priorities to real-time tasks, aiming at maximizing the magnitude of safety margins from deadlines and constraint satisfaction. 
+OPAM: Optimal Priority Assignment Method for real-time tasks
 
 
 ### Overview
@@ -22,7 +22,7 @@ OPAM runs on the following operating systems:
 * *PriorityAssignment* : Containing Java source code of OPAM
 * *UPPAAL* : Containing the result of our preliminary experiment using UPPAAL
 * *artifacts*: Containing Java executable files
-* *res*: Containing the input task descriptions
+* *res*: Containing input files - task descriptions
 * *settings.json*: Parameters for the Java executable files
 * **.sh*: Shell scripts for conducting experiments 
 
