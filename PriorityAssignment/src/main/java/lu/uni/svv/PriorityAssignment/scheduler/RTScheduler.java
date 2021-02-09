@@ -134,13 +134,13 @@ public class RTScheduler {
 		@Override
 		public int compare(Task t1, Task t2) {
 			if (t1.Priority != t2.Priority)
-				return t1.Priority - t2.Priority;
+				return t2.Priority - t1.Priority;   // the higher number is the higher priority
 			else {
 				if (t1.ID != t2.ID)
-					return t2.ID - t1.ID;
+					return t1.ID - t2.ID;  // the lower number of task order is the the higher priority
 				else {
 					if (t1.ExecutionID != t2.ExecutionID)
-						return t1.ExecutionID - t2.ExecutionID;
+						return t1.ExecutionID - t2.ExecutionID;  // the lower number of execution ID is the the higher priority
 					else
 						return 0;
 				}

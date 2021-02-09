@@ -149,31 +149,32 @@ public class CoEvolveStarter {
 	}
 	
 	/**
-	 * generate initial priorities from input
-	 * the order of priorities following task IDs
+	 * Generate initial priorities from input
+	 * This function converts engineer's priority consequence values
+	 * for the tasks that has the same priority, we assign priority following the order of list
 	 * @param input
 	 * @return
 	 */
-	private static Integer[] getPrioritiesFromInput(TaskDescriptor[] input) {
+	public static Integer[] getPrioritiesFromInput(TaskDescriptor[] input) {
 		Integer[] priorities = new Integer[input.length];
-		HashMap<Integer, Integer> map = new HashMap<>();
+		int[] assigned = new int[input.length];
+		Arrays.fill(assigned, 0);
 		
-		
-		// assign priority level
-		for(int priority=0; priority<input.length;priority++) {
-			int minTaskIdx = 0;
-			int minPriority = Integer.MAX_VALUE;
+		// assign priority level (from highest to lowest)
+		for(int priority=input.length-1; priority>=0;priority--) {
+			int maxTaskIdx = 0;
+			int maxPriority = 0;
 			for (int x = 0; x < input.length; x++) {
-				if (map.containsKey(x)) continue;
+				if (assigned[x]==1) continue;
 				
-				if (minPriority < input[x].Priority) {
-					minTaskIdx = x;
-					minPriority = input[x].Priority;
+				if (maxPriority < input[x].Priority) {
+					maxTaskIdx = x;
+					maxPriority = input[x].Priority;
 				}
 			}
 			
-			priorities[minTaskIdx] = priority;
-			map.put(minTaskIdx, 1);
+			priorities[maxTaskIdx] = priority;
+			assigned[maxTaskIdx]=1;
 		}
 		
 		return priorities;

@@ -21,20 +21,20 @@ ${CMD_PREFIX} java -jar artifacts/OPAM.jar -w ${TESTPOOL} --data ${RESOURCE} --m
 
 
 # Execute OPAM (${NUM_RUNS} runs will be executed)
-${CMD_PREFIX} java -jar artifacts/OPAM.jar --runCnt ${NUM_RUNS} -w ${CODE}_OPAM/${SUBJECT_NAME} --data ${RESOURCE} --testPath ${TESTPOOL}/test.list --max ${SIM_TIME} --quanta ${TIME_QUANTA} --numTest ${NUM_TEST} --cpus ${NCPU} --maxMissed 1000 ${OPTION}
+${CMD_PREFIX} java -jar artifacts/OPAM.jar --runCnt ${NUM_RUNS} -w ${CODE}/OPAM/${SUBJECT_NAME} --data ${RESOURCE} --testPath ${TESTPOOL}/test.list --max ${SIM_TIME} --quanta ${TIME_QUANTA} --numTest ${NUM_TEST} --cpus ${NCPU} --maxMissed 1000 ${OPTION}
 
 # Execute RandomSearch (${NUM_RUNS} runs will be executed)
-${CMD_PREFIX} java -jar artifacts/OPAM.jar --runCnt ${NUM_RUNS} -w ${CODE}_RS/${SUBJECT_NAME} --data ${RESOURCE} --testPath ${TESTPOOL}/test.list --max ${SIM_TIME} --quanta ${TIME_QUANTA} --numTest ${NUM_TEST} --cpus ${NCPU} --maxMissed 1000 --algo1 RandomSearch --simpleP2 ${OPTION}
+${CMD_PREFIX} java -jar artifacts/OPAM.jar --runCnt ${NUM_RUNS} -w ${CODE}/RS/${SUBJECT_NAME} --data ${RESOURCE} --testPath ${TESTPOOL}/test.list --max ${SIM_TIME} --quanta ${TIME_QUANTA} --numTest ${NUM_TEST} --cpus ${NCPU} --maxMissed 1000 --algo1 RandomSearch --simpleP2 ${OPTION}
 
 
 # Collecting results
-#${CMD_PREFIX} python3  scripts/Python/ResultCollector.py -f merge_fitness_industrial -t results/${CODE}_OPAM -o fitness_${CODE}.csv
-#${CMD_PREFIX} python3  scripts/Python/ResultCollector.py -f merge_fitness_industrial -t results/${CODE}_RS -o fitness_${CODE}.csv
-#${CMD_PREFIX} python3  scripts/Python/ResultCollector.py -f merge_time_industrial -t results/${CODE}_OPAM -o timeinfo_${CODE}.csv
-#${CMD_PREFIX} python3  scripts/Python/ResultCollector.py -f merge_time_industrial -t results/${CODE}_RS -o timeinfo_${CODE}.csv
+#${CMD_PREFIX} python3  scripts/Python/ResultCollector.py -f merge_fitness_industrial -t results/${CODE}/OPAM -o results/${CODE}/fitness_OPAM.csv
+#${CMD_PREFIX} python3  scripts/Python/ResultCollector.py -f merge_fitness_industrial -t results/${CODE}/RS -o results/${CODE}/fitness_RS.csv
+#${CMD_PREFIX} python3  scripts/Python/ResultCollector.py -f merge_time_industrial -t results/${CODE}/OPAM -o results/${CODE}/timeinfo_OPAM.csv
+#${CMD_PREFIX} python3  scripts/Python/ResultCollector.py -f merge_time_industrial -t results/${CODE}/RS -o results/${CODE}/timeinfo_RS.csv
 
 # Evaluate the values
-#${CMD_PREFIX} java -jar artifacts/QI.jar -w OPAM,RS --compare1 RQ1_OPAM/fitness_OPAM.csv --compare2 RQ1_RS/fitness_RS.csv --output fitness_QI.csv --runCnt 50 --cycle 1000
+#${CMD_PREFIX} java -jar artifacts/QI.jar -w OPAM,RS --compare1 ${CODE}/fitness_OPAM.csv --compare2 ${CODE}/fitness_RS.csv --output fitness_QI.csv --runCnt 50 --cycle 1000
 
 
 
