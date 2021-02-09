@@ -28,7 +28,6 @@ OPAM runs on the following operating systems:
 
 
 ### How to run OPAM?
-* Step 0: Set parameters on *settings.json*
 * Step 1: Run *run.sh*
 * Step 2: See output files in *results/OPAM*
 
@@ -36,19 +35,16 @@ OPAM runs on the following operating systems:
 ### How to run experiments?
 
 ##### =EXP1=
-* Step 0: Set common parameters through *settings.json*
 * Step 1: Run *exp1.sh* for each subject
 * Step 2: See output files in *results/RQ1_OPAM* and *results/RQ1_RS*
 
 
 ##### =EXP2=
-* Step 0: Set common parameters through *settings.json*
 * Step 1: Run *exp2.gen.sh*
 * Step 2: Run *exp2.1.sh* ~ *exp2.4.sh* 
 * Step 3: See output files in *results/RQ2*
 
 
 ##### =EXP3=
-* Step 0: Set common parameters through *settings.json*
 * Step 1: Running *exp3.sh*
 * Step 2: See output files in *results/RQ3*
