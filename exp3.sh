@@ -25,7 +25,6 @@ ${CMD_PREFIX} java -jar artifacts/OPAM.jar --runCnt ${NUM_RUNS} -w ${CODE}/${SUB
 
 
 # Collecting results
-#${CMD_PREFIX} ~/venv/bin/python3  scripts/Python/ScheduleAnalyzer.py -t results/${CODE} -o schedule_${CODE}.csv
-
-
-
+#${CMD_PREFIX} python ScheduleStats.py -s ${SUBJECT_NAME} -t results/${CODE}/${SUBJECT_NAME} -o results/${CODE}/stats_All.csv -k All
+#${CMD_PREFIX} python ScheduleStats.py -s ${SUBJECT_NAME} -t results/${CODE}/${SUBJECT_NAME} -o results/${CODE}/stats_Periodic.csv -k Periodic
+#${CMD_PREFIX} python ScheduleStats.py -s ${SUBJECT_NAME} -t results/${CODE}/${SUBJECT_NAME} -o results/${CODE}/stats_Aperiodic.csv -k AperiodicAll
