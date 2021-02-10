@@ -24,14 +24,6 @@ class ScheduleStats(ResultFileLoader):
             self.formatPriority = priorityFormat
         pass
 
-    def check(self, basePath, outputPath, maxRun=50):
-        print(" + Executing Directory: "+os.path.abspath(os.curdir))
-        print(" + Loading Directory: "+os.path.abspath(basePath))
-        print(" + Output Path: "+os.path.abspath(outputPath))
-        self.verifying_runs(basePath, maxRun)
-        print(" + Available runs: : %d" % maxRun)
-        pass
-
     # Check all required runs are exists (based on the settings)
     def verifying_runs(self, basePath, numRuns):
         listID = [0] * numRuns
@@ -92,7 +84,7 @@ class ScheduleStats(ResultFileLoader):
                 num += 1
         return num
 
-    def analysis_solution(self, _workPath, _runID, _solutionID, _FS, _FC, _arrCnt=0, UNIT=1.0, _compArray=None, option="All"):
+    def analysis_solution(self, solutionType, _workPath, _runID, _solutionID, _FS, _FC, _arrCnt=0, UNIT=1.0, _compArray=None, option="All"):
         if _runID is None:
             retText = "%d,%d, %.1f,%.1f,%d, %d,%.1f,  %d,%d,%d, %f,%f,%f,%f,  %.4f"%(
                 0,0,  0,0,0,  0,0.0,   0,0,0,  0,0,0,0  ,0)
@@ -105,7 +97,7 @@ class ScheduleStats(ResultFileLoader):
         nTasks = 0
         nViolation = 0
         nExecution = 0
-        print("processing for each arrivals", end="")
+        print("processing %s point (solutionID: %d)" % (solutionType, _solutionID), end="")
         for arrID in range(0, _arrCnt):
             print(".", end="")
 
@@ -256,10 +248,6 @@ class ScheduleStats(ResultFileLoader):
     # Run function
     #################################################
     def run(self, subject, targetPath, outputPath, option="All", runNum=50, timeunit=0.1, numTest=10, cycleNum=1000):
-        print(" + Executing Directory: "+os.path.abspath(os.curdir))
-        print(" + Loading Directory: "+os.path.abspath(targetPath))
-        print(" + Output Path: "+os.path.abspath(outputPath))
-        print(" + Available runs: : %d" % runNum)
         self.verifying_runs(targetPath, runNum)
 
         # preparing output
@@ -282,7 +270,7 @@ class ScheduleStats(ResultFileLoader):
         # analysis solutions and print out
         initial = None
         for key, solution in solutions.items():
-            retText, comp = self.analysis_solution(targetPath,
+            retText, comp = self.analysis_solution(key, targetPath,
                                                    solution['Run'],
                                                    solution['SolutionID'], solution['FS'],
                                                    solution['FC'],
@@ -332,8 +320,16 @@ def parse_arg():
 
 if __name__ == "__main__":
     args = parse_arg()
-    print("Output File: %s" % args.outputPath)
-    print("Target Path: %s" % args.targetPath)
+    print(" + Subject name    : "+args.subjectName)
+    print(" + Executing path  : "+os.path.abspath(os.curdir))
+    print(" + Data path       : "+os.path.abspath(args.targetPath))
+    print(" + Output path     : "+os.path.abspath(args.outputPath))
+    print(" + Task type       : %s" % args.taskType)
+    print(" + Number of runs: : %d" % args.numRuns)
+    print(" + Number of test  : %d" % args.numTest)
+    print(" + Number of cycle : %d" % args.numCycle)
+    print(" + Unit of time:   : %.2f" % args.timeUnit)
+
     obj = ScheduleStats()
     obj.run(args.subjectName, args.targetPath, args.outputPath, args.taskType, args.numRuns, args.timeUnit, args.numTest, args.numCycle)
 
