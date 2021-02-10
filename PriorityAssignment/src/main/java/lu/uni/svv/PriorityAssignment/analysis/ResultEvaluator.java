@@ -63,7 +63,7 @@ public class ResultEvaluator {
 		// create output file if it exists delete first
 		File f = new File(output);
 		if (f.exists()) f.delete();
-		String title =  "Approach,Subject,Run,GD,HV,Spread";
+		String title =  "Approach,Subject,Run,GD,HV,SP";
 		GAWriter writer = new GAWriter(output, Level.INFO, title, "./", false);
 		
 		// work for each subject
@@ -101,7 +101,7 @@ public class ResultEvaluator {
 			// calculate QI values
 			String resText = calculate(runNum, approaches[0], subject, pops1Run, frontNormalizer);
 			writer.write(resText);
-			resText = calculate(runNum, approaches[1], subject, pops1Run, frontNormalizer);
+			resText = calculate(runNum, approaches[1], subject, pops2Run, frontNormalizer);
 			writer.write(resText);
 		}
 		writer.close();

@@ -34,7 +34,7 @@ ${CMD_PREFIX} java -jar artifacts/OPAM.jar --runCnt ${NUM_RUNS} -w ${CODE}/RS/${
 #${CMD_PREFIX} python3  scripts/Python/ResultCollector.py -f merge_time_industrial -t results/${CODE}/RS -o results/${CODE}/timeinfo_RS.csv
 
 # Evaluate the values
-#${CMD_PREFIX} java -jar artifacts/QI.jar -w OPAM,RS --compare1 ${CODE}/fitness_OPAM.csv --compare2 ${CODE}/fitness_RS.csv --output fitness_QI.csv --runCnt ${NUM_RUNS} --cycle 1000
+#${CMD_PREFIX} java -jar artifacts/QI.jar -w OPAM,RS --compare1 ${CODE}/fitness_OPAM.csv --compare2 ${CODE}/fitness_RS.csv --output ${CODE}/fitness_QI.csv --runCnt ${NUM_RUNS} --cycle 1000
 
 
 
