@@ -230,7 +230,7 @@ public class TaskDescriptor implements Comparable<TaskDescriptor>{
 		sb.append("Task ID, Task Name,Task Type,Task Priority,Offset,WCET min,WCET max,Task Period (ms),Minimum interarrival-time (ms),Maximum Interarrival time,Task Deadline, Deadline Type, Dependencies, Triggers\n");
 		for(TaskDescriptor task:_tasks)
 		{
-			sb.append(String.format("%d,\"%s\",%s,%d,%f,%f,%f,%f",
+			sb.append(String.format("%d,%s,%s,%d,%f,%f,%f,%f",
 					task.ID,
 					task.Name, task.Type.toString(), task.Priority, task.Offset* _timeQuanta,
 					task.WCET * _timeQuanta, task.MaxWCET* _timeQuanta,

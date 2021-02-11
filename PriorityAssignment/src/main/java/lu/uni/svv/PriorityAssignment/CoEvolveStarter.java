@@ -163,11 +163,11 @@ public class CoEvolveStarter {
 		// assign priority level (from highest to lowest)
 		for(int priority=input.length-1; priority>=0;priority--) {
 			int maxTaskIdx = 0;
-			int maxPriority = 0;
+			int maxPriority = -1;
 			for (int x = 0; x < input.length; x++) {
 				if (assigned[x]==1) continue;
 				
-				if (maxPriority < input[x].Priority) {
+				if (input[x].Priority > maxPriority) {
 					maxTaskIdx = x;
 					maxPriority = input[x].Priority;
 				}

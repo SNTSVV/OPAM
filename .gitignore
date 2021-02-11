@@ -23,4 +23,8 @@ META-INF/
 ############################
 ## Other stttings
 ############################
+__*
+.*
 venv/
+backup/
+scripts/R
