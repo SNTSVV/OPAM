@@ -20,7 +20,7 @@
 N_TASKSETS=10
 SIM_TIME=2000
 CMD_PREFIX=""
-TARGET_PATH="synthetics"
+TARGET_PATH="res/synthetics"
 
 # Generate synthetic task sets (EXP2.1: varying the number of tasks)
 for ((nTask=10; nTask<=50; nTask+=5)); do

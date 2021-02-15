@@ -63,7 +63,7 @@ public class TaskSetSynthesizer {
 	                 int nTask, double ratioAperiodic, int maxArrivalRange) {
 		
 		// Generate result path
-		String basePath = String.format("res/%s", workName);
+		String basePath = String.format("%s", workName);
 		File path = new File(String.format("%s/%s",basePath, control));
 		if (!path.exists()) path.mkdirs();
 		
