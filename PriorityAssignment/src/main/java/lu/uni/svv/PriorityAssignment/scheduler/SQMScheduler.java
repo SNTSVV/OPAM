@@ -135,7 +135,9 @@ public class SQMScheduler extends RTScheduler{
 			// Check whether there is more executions
 			if (_variables[tIDX].size() <= executionIndex[tIDX]) continue;
 			if (timeLapsed != _variables[tIDX].get(executionIndex[tIDX])) continue;
-			if (Tasks[tIDX].MaxWCET==0 && Tasks[tIDX].MaxWCET==0) continue;
+			
+			// Remove tasks that has 0 execution time
+			if (Tasks[tIDX].WCET==0 && Tasks[tIDX].MaxWCET==0) continue;
 			
 			// Add Tasks
 			addReadyQueue(tIDX, timeLapsed);

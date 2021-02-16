@@ -24,6 +24,6 @@ ${CMD_PREFIX} java -jar artifacts/OPAM.jar -w ${TESTPOOL} --data ${RESOURCE} --m
 ${CMD_PREFIX} java -jar artifacts/OPAM.jar --runCnt ${NUM_RUNS} -w ${CODE}/${SUBJECT_NAME} --data ${RESOURCE} --testPath ${TESTPOOL}/test.list --max ${SIM_TIME} --quanta ${TIME_QUANTA} --numTest ${NUM_TEST} --cpus ${NCPU} --maxMissed 1000 ${OPTION}
 
 # Collecting results
-${CMD_PREFIX} python3 scripts/Python/ResultCollector.py -f merge_fitness_industrial -t results/${CODE} -o fitness_${CODE}.csv
+${CMD_PREFIX} python3 scripts/Python/ResultCollector.py -f merge_fitness_industrial -t results/${CODE} -o results/${CODE}/fitness_${CODE}.csv
 
 
