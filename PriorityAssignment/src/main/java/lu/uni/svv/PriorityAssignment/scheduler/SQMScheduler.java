@@ -269,7 +269,7 @@ public class SQMScheduler extends RTScheduler{
 			peeks[pSize++] = t;
 			
 			// if current task running in this CPU need to be preempted
-			if (t.Priority < CPU[cid].Priority) {
+			if (t.Priority > CPU[cid].Priority) {
 				needPreemption = true;
 				
 				// Count how many tasks can be executed by other CPUs
@@ -277,7 +277,7 @@ public class SQMScheduler extends RTScheduler{
 				for (int y = 0; y < CPU.length; y++) {
 					if (cid == y) continue;
 					// find cpus that are not working or lower priority task running than current CPU
-					if (CPU[y] == null || CPU[y].Priority > CPU[cid].Priority) {
+					if (CPU[y] == null || CPU[y].Priority < CPU[cid].Priority) {
 						cntAvailable++;
 					}
 				}

@@ -10,9 +10,9 @@ public class ConstrantsEvaluator {
 		List<Integer> priorities = solution.getVariables();
 		
 		// calculate lowest priority among periodic tasks
-		int lowest = 0;
+		int lowest = Integer.MAX_VALUE;
 		for (int x=0; x<priorities.size(); x++){
-			if(tasks[x].Type!= TaskType.Aperiodic && lowest < priorities.get(x)){
+			if(tasks[x].Type!= TaskType.Aperiodic && lowest > priorities.get(x)){
 				lowest = priorities.get(x);
 			}
 		}
@@ -21,7 +21,7 @@ public class ConstrantsEvaluator {
 		int priorityDistance = 0;
 		for (int x=0; x<priorities.size(); x++){
 			if(tasks[x].Type==TaskType.Aperiodic){
-				int diff = priorities.get(x) - lowest;
+				int diff = lowest - priorities.get(x);
 				priorityDistance += diff;
 			}
 		}
