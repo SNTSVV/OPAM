@@ -25,6 +25,6 @@ ${CMD_PREFIX} java -jar artifacts/OPAM.jar --runCnt ${NUM_RUNS} -w ${CODE}/${SUB
 
 
 # Collecting results
-#${CMD_PREFIX} python ScheduleStats.py -s ${SUBJECT_NAME} -t results/${CODE}/${SUBJECT_NAME} -o results/${CODE}/stats_All.csv -k All
-#${CMD_PREFIX} python ScheduleStats.py -s ${SUBJECT_NAME} -t results/${CODE}/${SUBJECT_NAME} -o results/${CODE}/stats_Periodic.csv -k Periodic
-#${CMD_PREFIX} python ScheduleStats.py -s ${SUBJECT_NAME} -t results/${CODE}/${SUBJECT_NAME} -o results/${CODE}/stats_Aperiodic.csv -k AperiodicAll
+#${CMD_PREFIX} python scripts/Python/ScheduleStats.py -s ${SUBJECT_NAME} -t results/${CODE}/${SUBJECT_NAME} -r ${NUM_RUNS} -u ${TIME_UNIT} -o results/${CODE}/stats_All.csv -k All
+#${CMD_PREFIX} python scripts/Python/ScheduleStats.py -s ${SUBJECT_NAME} -t results/${CODE}/${SUBJECT_NAME} -r ${NUM_RUNS} -u ${TIME_UNIT} -o results/${CODE}/stats_Periodic.csv -k Periodic
+#${CMD_PREFIX} python scripts/Python/ScheduleStats.py -s ${SUBJECT_NAME} -t results/${CODE}/${SUBJECT_NAME} -r ${NUM_RUNS} -u ${TIME_UNIT} -o results/${CODE}/stats_Aperiodic.csv -k AperiodicAll
