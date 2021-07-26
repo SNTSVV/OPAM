@@ -1,5 +1,0 @@
-Subject,PointType, nTasks,SolutionID,FS,FC,nViolation,nExecution,avgExecution,nMissedPeriodic,nMissedSporadic,nMissedAperiodic,minMargin,minMargin, meanMargin,medianMargin,P-value
-E-SAIL,Initial,25,1,-3327.4,15,0,126376,12637.6,59,0,0,-44.5,59710.3,78.080405,48.1,-1
-E-SAIL,Knee,25,9887,-3184.9,15,0,126376,12637.6,0,0,0,9.4,59704.7,82.26456,48.1,0
-E-SAIL,Extreme1,25,9887,-3184.9,15,0,126376,12637.6,0,0,0,9.4,59704.7,82.26456,48.1,0
-E-SAIL,Extreme2,25,9887,-3184.9,15,0,126376,12637.6,0,0,0,9.4,59704.7,82.26456,48.1,0

@@ -1,0 +1,26 @@
+\begin{table}[t]
+\caption{Comparing safety margins from the task executions of ESAIL when using our optimized priority assignment and the one defined by engineers.}
+	\begin{center}
+	\begin{tabular}{ccrrr}
+		\toprule
+		\multicolumn{1}{l}{} & \multicolumn{1}{l}{} & \multicolumn{1}{c}{Periodic tasks} & \multicolumn{1}{c}{Aperiodic tasks} & \multicolumn{1}{c}{All tasks} \\
+		\midrule
+\multirow{4}{*}{Engineer} & Min& -44.5& 9.4& -44.5 \\
+ & Max& 1879.7& 59710.3& 59710.3 \\
+ & Avg.& 126.6& 52.6& 78.1 \\
+ & Median& 82.1& 9.4& 48.1 \\
+		\midrule
+\multirow{4}{*}{OPAM} & Min& 48.1& 9.4& 9.4 \\
+ & Max& 1879.7& 59707.2& 59707.2 \\
+ & Avg.& 129.8& 57.2& 82.3 \\
+ & Median& 85.7& 9.4& 48.1 \\
+		\midrule
+\multirow{4}{*}{\% Difference} & Min& 208.09\%& 0.00\%& 121.12\% \\
+ & Max& 0.00\%& -0.01\%& -0.01\% \\
+ & Avg.& 2.53\%& 8.89\%& 5.33\% \\
+ & Median& 4.38\%& 0.00\%& 0.00\% \\
+		\bottomrule
+		\multicolumn{5}{l}{\footnotesize $\ast$ Unit of time: ms}
+	\end{tabular}
+	\end{center}
+\end{table}
