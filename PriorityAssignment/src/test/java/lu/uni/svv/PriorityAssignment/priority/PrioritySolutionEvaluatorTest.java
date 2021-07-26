@@ -22,7 +22,7 @@ public class PrioritySolutionEvaluatorTest extends TestCase {
 		// Environment Settings
 		Settings.update(new String[] {});
 		Settings.INPUT_FILE = "res/industrial/GAP.csv";
-		Settings.WORKNAME = "TEST/GAP";
+		Settings.BASE_PATH = "results/TEST/GAP";
 		Settings.TIME_MAX = 0;
 		Settings.TIME_QUANTA = 1;
 		Settings.CYCLE_NUM = 3;
@@ -71,16 +71,16 @@ public class PrioritySolutionEvaluatorTest extends TestCase {
 	public void testEvaluateSolution() throws Exception{
 		init();
 		
-		PriorityProblem problemP = new PriorityProblem(input, simulationTime);
+		PriorityProblem problemP = new PriorityProblem(input, simulationTime, Settings.SCHEDULER);
 		List<PrioritySolution> P = createInitialPriorities(Settings.P2_POPULATION, null, problemP);
 		
 		List<Integer[]> priorities = PrioritySolution.toArrays(P);
 		ArrivalProblem problemA = new ArrivalProblem(input, priorities, simulationTime, Settings.SCHEDULER);
 		List<ArrivalsSolution> A = createInitialArrivals(problemA, Settings.P1_POPULATION);
 		List<Arrivals[]> arrivals = ArrivalsSolution.toArrays(A);
-		PrioritySolutionEvaluator evaluator = new PrioritySolutionEvaluator(input, arrivals, arrivals, simulationTime, Settings.SCHEDULER);
+		PrioritySolutionEvaluator evaluator = new PrioritySolutionEvaluator(arrivals, arrivals);
 		
-		evaluator.evaluateSolution(P.get(0), arrivals, false, false,0);
+		evaluator.evaluateSolution(problemP, P.get(0), arrivals, false, false,0);
 		
 	}
 

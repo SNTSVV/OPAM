@@ -1,12 +1,16 @@
 package lu.uni.svv.PriorityAssignment.priority;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import lu.uni.svv.PriorityAssignment.scheduler.RTScheduler;
+import lu.uni.svv.PriorityAssignment.task.TaskType;
 import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.util.JMetalLogger;
 import lu.uni.svv.PriorityAssignment.task.TaskDescriptor;
-import lu.uni.svv.PriorityAssignment.utils.Settings;
+
 
 
 /**
@@ -25,7 +29,9 @@ public class PriorityProblem implements Problem<PrioritySolution> {
 	
 	private List<Double[]> ranges = null;
 	
-	protected TaskDescriptor[] Tasks;
+	public TaskDescriptor[] Tasks;
+	public int SimulationTime;
+	public String SchedulerName;
 	
 	/**
 	 * Constructor
@@ -33,17 +39,24 @@ public class PriorityProblem implements Problem<PrioritySolution> {
 	 * @throws NumberFormatException
 	 * @throws IOException
 	 */
-	public PriorityProblem(TaskDescriptor[] _tasks, long _simulationTime) throws NumberFormatException, IOException{
+	public PriorityProblem(TaskDescriptor[] _tasks, int _simulationTime, String _schedulerType) throws NumberFormatException, IOException{
 
 		// Set environment of this problem.
 		this.Tasks = _tasks;
 		this.NumberOfVariables = _tasks.length;
 		this.NumberOfObjectives = 2;    //Multi Objective Problem
-	
+		this.SimulationTime = _simulationTime;
+		this.SchedulerName = _schedulerType;
+
+		// counting the number of aperiodic tasks
+		for(TaskDescriptor task:this.Tasks){
+			if (task.Type== TaskType.Aperiodic) this.NumberOfAperiodics++;
+		}
+
 		this.calculateRange(_tasks, _simulationTime);
 	}
 	
-	protected void calculateRange(TaskDescriptor[] _tasks, long _simulationTime){
+	protected void calculateRange(TaskDescriptor[] _tasks, int _simulationTime){
 		this.ranges = new ArrayList<>();
 		
 		// get log normalization
@@ -109,5 +122,30 @@ public class PriorityProblem implements Problem<PrioritySolution> {
 	public int getNumberOfAperiodics(){
 		return NumberOfAperiodics;
 		
+	}
+
+	public RTScheduler getScheduler(){
+		// Load a scheduler class
+		Class schedulerClass = null;
+		try {
+			String packageName = this.getClass().getPackage().getName();
+			packageName = packageName.substring(0, packageName.lastIndexOf("."));
+			schedulerClass = Class.forName(packageName + ".scheduler." + this.SchedulerName);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+//			System.exit(1);
+		}
+		if (schedulerClass==null) return null;
+
+		// Make an instance
+		Constructor constructor = schedulerClass.getConstructors()[0];
+		Object[] parameters = {this.Tasks, this.SimulationTime};
+		RTScheduler scheduler = null;
+		try {
+			scheduler = (RTScheduler) constructor.newInstance(parameters);
+		}catch (InvocationTargetException | InstantiationException | IllegalAccessException e) {
+			e.printStackTrace();
+		}
+		return scheduler;
 	}
 }

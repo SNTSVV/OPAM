@@ -3,7 +3,8 @@ package lu.uni.svv.PriorityAssignment;
 import lu.uni.svv.PriorityAssignment.arrivals.Arrivals;
 import lu.uni.svv.PriorityAssignment.arrivals.ArrivalsSolution;
 import lu.uni.svv.PriorityAssignment.arrivals.SampleGenerator;
-import lu.uni.svv.PriorityAssignment.priority.PriorityNSGAII;
+import lu.uni.svv.PriorityAssignment.arrivals.WorstGenerator;
+import lu.uni.svv.PriorityAssignment.priority.AbstractPrioritySearch;
 import lu.uni.svv.PriorityAssignment.priority.PrioritySolution;
 import lu.uni.svv.PriorityAssignment.task.TaskDescriptor;
 import lu.uni.svv.PriorityAssignment.utils.FileManager;
@@ -50,7 +51,7 @@ public class CoEvolveStarter {
 		JMetalLogger.logger.info("Initialized program");
 		
 		// test mode check
-		boolean testGenerationMode = stringIn(Settings.TEST_GENERATION, new String[]{"Random","Adaptive","AdaptiveFull","Heuristic", "Limit"}); //"Initial"
+		boolean testGenerationMode = stringIn(Settings.TEST_GENERATION, new String[]{"Random","Adaptive","AdaptiveFull","Heuristic", "Limit", "Worst"}); //"Initial"
 		if (testGenerationMode){
 			GAWriter.init(null, true);
 			printInput(TaskDescriptor.toString(input, Settings.TIME_QUANTA), null);
@@ -58,7 +59,7 @@ public class CoEvolveStarter {
 		
 		// work for test data
 		List<Arrivals[]> testArrivals = null;
-		testArrivals = generateTestData(input, simulationTime);
+		testArrivals = generateTestData(input, simulationTime, prioritiy);
 		if (testArrivals == null) {
 			// Quit all process
 				return;
@@ -89,31 +90,36 @@ public class CoEvolveStarter {
 		// initialze static objects
 		ArrivalsSolution.initUUID();
 		PrioritySolution.initUUID();
-		PriorityNSGAII.init();
+		AbstractPrioritySearch.init();
 		
 		// Run Co-Evolution (run function will generate result files)
 		CoEvolve system = new CoEvolve();
 		system.run(input, Settings.CYCLE_NUM, simulationTime, prioritiy, testArrivals);
 	}
 	
-	public static List<Arrivals[]> generateTestData(TaskDescriptor[] input, int simulationTime) throws Exception{
+	public static List<Arrivals[]> generateTestData(TaskDescriptor[] input, int simulationTime, Integer[] priorityEngineer) throws Exception{
 		List<Arrivals[]> testArrivals=null;
-		SampleGenerator generagor = new SampleGenerator(input, simulationTime);
+		SampleGenerator generator = new SampleGenerator(input, simulationTime);
 		if (Settings.TEST_GENERATION.compareTo("Random")==0) {
-			generagor.generateRandom(Settings.NUM_TEST, false, false, false);
+			generator.generateRandom(Settings.NUM_TEST, false, false, false);
 			return null;
 		}
 		else if (Settings.TEST_GENERATION.compareTo("Adaptive")==0) {
-			generagor.generateAdaptive(Settings.NUM_TEST, 100, true);
+			generator.generateAdaptive(Settings.NUM_TEST, 100, true);
 			return null;
 		}
 		else if (Settings.TEST_GENERATION.compareTo("AdaptiveFull")==0) {
-			generagor.generateAdaptive(Settings.NUM_TEST, 100, false);
+			generator.generateAdaptive(Settings.NUM_TEST, 100, false);
+			return null;
+		}
+		else if (Settings.TEST_GENERATION.compareTo("Worst")==0) {
+			WorstGenerator worst = new WorstGenerator(input, simulationTime, priorityEngineer);
+			worst.generate(Settings.NUM_TEST);
 			return null;
 		}
 		else if (Settings.TEST_GENERATION.length()==0){
 			// normal execution
-			testArrivals = FileManager.LoadTestArrivals(input, simulationTime);
+			testArrivals = FileManager.LoadTestArrivals(Settings.TEST_PATH, input, simulationTime, Settings.NUM_TEST);
 		}
 		else{
 			throw new Exception("There is no options for " + Settings.TEST_GENERATION);
@@ -147,11 +153,11 @@ public class CoEvolveStarter {
 			writer.close();
 		}
 	}
-	
+
 	/**
 	 * Generate initial priorities from input
-	 * This function converts engineer's priority consequence values
-	 * for the tasks that has the same priority, we assign priority following the order of list
+	 * This function converts engineer's priority values from task input into priority level (0 to number of tasks - 1),
+	 * it assumes that the higher value of priority is the higher priority level
 	 * @param input
 	 * @return
 	 */

@@ -10,6 +10,8 @@ import lu.uni.svv.PriorityAssignment.utils.Settings;
 import lu.uni.svv.PriorityAssignment.utils.StoreManger;
 import org.apache.commons.math3.ml.distance.EuclideanDistance;
 import org.uma.jmetal.operator.impl.selection.RankingAndCrowdingSelection;
+import org.uma.jmetal.util.solutionattribute.impl.DominanceRanking;
+import org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance;
 import org.uma.jmetal.util.SolutionListUtils;
 import org.uma.jmetal.util.comparator.DominanceComparator;
 
@@ -19,15 +21,16 @@ public class ExternalFitness {
 	public Map<String, Object> best;
 	
 	protected GAWriter writer;
+	protected GAWriter writerEx;
 	protected PriorityProblem problem;
 	protected PrioritySolutionEvaluator evaluator;
-	protected Comparator<PrioritySolution> dominanceComparator;
+	protected DominanceComparator<PrioritySolution> dominanceComparator;
 	
 	public ExternalFitness(PriorityProblem _problem, PrioritySolutionEvaluator _evaluator, Map<String, Object> _best, int _maxPopulation){
 		this(_problem, _evaluator, _best, _maxPopulation, new DominanceComparator());
 	}
 	
-	public ExternalFitness(PriorityProblem _problem, PrioritySolutionEvaluator _evaluator, Map<String, Object> _best, int _maxPopulation, Comparator<PrioritySolution> _dominanceComparator){
+	public ExternalFitness(PriorityProblem _problem, PrioritySolutionEvaluator _evaluator, Map<String, Object> _best, int _maxPopulation, DominanceComparator<PrioritySolution> _dominanceComparator){
 		problem = _problem;
 		maxPopulation = _maxPopulation;
 		dominanceComparator = _dominanceComparator;
@@ -41,6 +44,7 @@ public class ExternalFitness {
 		}
 		
 		init_external_fitness();
+		init_external_fitness_ex();
 	}
 	
 	
@@ -60,6 +64,14 @@ public class ExternalFitness {
 		sb.append("]");
 		System.out.println(sb.toString());
 	}
+
+	/**
+	 * Evaluate a population
+	 * @param _population
+	 * @param _cycle
+	 * @param _iterations
+	 * @return
+	 */
 	public double evaluateOrigin(List<PrioritySolution> _population, int _cycle, int _iterations){
 		if( _population == null) return 0;
 		
@@ -81,6 +93,7 @@ public class ExternalFitness {
 		double distance = calculateDistance(selected);
 		
 		print_external_fitness(_cycle, _iterations, selected, distance);
+		print_external_fitness_ex(_cycle, _iterations, selected, distance);
 		return distance;
 	}
 	
@@ -96,10 +109,7 @@ public class ExternalFitness {
 		// select individuals which are not evaluated before
 		List<PrioritySolution> jointP = difference(_population, lastPopulation, true);
 		((PrioritySolutionEvaluator)this.evaluator).evaluateForExternal(jointP, this.problem);
-//		summaryPop("Internal", _population);
-//		summaryPop("lastPopulation", lastPopulation);
-//		summaryPop("New Evol", jointP);
-		
+
 		// Add evaluated individuals into joint population
 		jointP.addAll( lastPopulation );
 		
@@ -122,6 +132,7 @@ public class ExternalFitness {
 		best.put("Iteration", _iterations);
 		
 		print_external_fitness(_cycle, _iterations, pareto, distance);
+		print_external_fitness_ex(_cycle, _iterations, pareto, distance);
 		
 //		printPopulation("Full Population", selected);
 //		printPopulation("Pareto", pareto);
@@ -219,12 +230,12 @@ public class ExternalFitness {
 			int DM = (int)solution.getAttribute("DeadlineMiss");
 
 			int rank = 0;
-			if (solution.hasAttribute(org.uma.jmetal.util.solutionattribute.impl.DominanceRanking.class))
-				rank = (Integer)solution.getAttribute(org.uma.jmetal.util.solutionattribute.impl.DominanceRanking.class);
+			if (solution.hasAttribute(DominanceRanking.class))
+				rank = (Integer)solution.getAttribute(DominanceRanking.class);
 			
 			double cDistance = 0.0;
-			if (solution.hasAttribute(org.uma.jmetal.util.solutionattribute.impl.DominanceRanking.class))
-				cDistance = (Double)solution.getAttribute(org.uma.jmetal.util.solutionattribute.impl.CrowdingDistance.class);
+			if (solution.hasAttribute(CrowdingDistance.class))
+				cDistance = (Double)solution.getAttribute(CrowdingDistance.class);
 			
 			sb.append(baseItems);
 			sb.append(",");
@@ -266,6 +277,65 @@ public class ExternalFitness {
 		}
 		
 		writer.write(sb.toString());
+	}
+
+	/**
+	 * print out titles for external fitness values
+	 */
+	private void init_external_fitness_ex(){
+		// Title
+		String title = "Cycle,Iteration,Distance,SolutionIndex,SolutionID,ArrivalsID,Schedulability,Satisfaction,DeadlineMiss,Rank,CrowdingDistance"; //
+		writerEx = new GAWriter("_fitness/fitness_external_ex.csv", Level.INFO, title, null, true);
+	}
+
+	/**
+	 * print out external fitness values for each cycle (all evaluation)
+	 */
+	public void print_external_fitness_ex(int cycle, int iterations, List<PrioritySolution> _pareto, double _dist){
+
+		String baseItems = String.format("%d,%d,%e",cycle, iterations, _dist);
+
+		StringBuilder sb = new StringBuilder();
+		int solIdx =0;
+		for (PrioritySolution solution: _pareto){
+
+//			if (!(rank==null || (int)rank==0)) continue;
+
+			int rank = 0;
+			if (solution.hasAttribute(DominanceRanking.class))
+				rank = (Integer)solution.getAttribute(DominanceRanking.class);
+
+			double cDistance = 0.0;
+			if (solution.hasAttribute(CrowdingDistance.class))
+				cDistance = (Double)solution.getAttribute(CrowdingDistance.class);
+
+			int[] DM = (int[])solution.getAttribute("DeadlineList");
+			double[] fitnessList = (double[])solution.getAttribute("FitnessList");
+
+			for (int k=0; k< fitnessList.length; k++){
+				sb.append(baseItems);
+				sb.append(",");
+				sb.append(solIdx);
+				sb.append(",");
+				sb.append(solution.ID);
+				sb.append(",");
+				sb.append(k);
+				sb.append(",");
+				sb.append(String.format("%e", fitnessList[k]));
+				sb.append(",");
+				sb.append(-solution.getObjective(1));
+				sb.append(",");
+				sb.append(DM[k]);
+				sb.append(",");
+				sb.append(rank);
+				sb.append(",");
+				sb.append(cDistance);
+				sb.append("\n");
+			}
+			solIdx ++;
+		}
+
+		writerEx.write(sb.toString());
 	}
 
 	protected void printPopulation(String title, List<PrioritySolution> population){

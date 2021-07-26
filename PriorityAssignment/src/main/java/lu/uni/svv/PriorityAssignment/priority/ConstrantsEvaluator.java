@@ -6,6 +6,15 @@ import lu.uni.svv.PriorityAssignment.task.TaskType;
 import java.util.List;
 
 public class ConstrantsEvaluator {
+	/**
+	 * Assuming that the greater value of priority has the higher priority level,
+	 * This function calculates the distance of priority level of aperiodic task
+	 *                          from the lowest priority level among periodic tasks
+	 * The higher return value represents the higher extent of the constraint satisfaction
+	 * @param solution
+	 * @param tasks
+	 * @return
+	 */
 	public static double calculate(PrioritySolution solution, TaskDescriptor[] tasks){
 		List<Integer> priorities = solution.getVariables();
 		

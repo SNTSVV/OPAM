@@ -11,7 +11,7 @@ public class TaskSetParams {
 	public int N_TASK;
 	public int MAX_ARRIVAL_RANGE;
 	public double RATIO_APERIODIC;
-	public String WORKNAME;
+	public String BASE_PATH;
 	public String PRIORITY;
 	public boolean LIM_SIM;
 	public int GRANULARITY;
@@ -32,7 +32,7 @@ public class TaskSetParams {
 		this.N_TASK = (int)parser.getParam("N_TASK");
 		this.MAX_ARRIVAL_RANGE = (int)parser.getParam("MAX_ARRIVAL_RANGE");
 		this.RATIO_APERIODIC = (double)parser.getParam("RATIO_APERIODIC");
-		this.WORKNAME = (String)parser.getParam("WORKNAME");
+		this.BASE_PATH = (String)parser.getParam("BASE_PATH");
 		this.PRIORITY = (String)parser.getParam("PRIORITY");
 		this.LIM_SIM = (boolean)parser.getParam("LIM_SIM");
 		this.GRANULARITY = (int)parser.getParam("GRANULARITY");
@@ -54,7 +54,7 @@ public class TaskSetParams {
 		parser.addOption(false,"MAX_ARRIVAL_RANGE", ArgumentParser.DataType.INTEGER, "a", null, "", 2);
 		parser.addOption(false,"RATIO_APERIODIC", ArgumentParser.DataType.DOUBLE, "r", null, "", 0.4);  // average industrial subjects (rounded to -1 digits, 0.37 to 0.4)
 		parser.addOption(false,"N_TASK", ArgumentParser.DataType.INTEGER, "m", null, "", 20);           // average industrial subjects (rounded to 2 digits, 18.3 to 20)
-		parser.addOption(false,"WORKNAME", ArgumentParser.DataType.STRING,"w", null, "", null);
+		parser.addOption(false,"BASE_PATH", ArgumentParser.DataType.STRING,"b", null, "", null);
 		parser.addOption(false,"GRANULARITY", ArgumentParser.DataType.INTEGER,null, "granularity", "", 10);
 		parser.addOption(false,"PRIORITY", ArgumentParser.DataType.STRING,null, "priority", "default rate monotonic", "RM");
 		parser.addOption(false,"CONTROL_VALUE", ArgumentParser.DataType.STRING,"c", null, "", null);

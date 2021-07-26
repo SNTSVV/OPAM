@@ -23,7 +23,8 @@ public class TaskSetSynthesizer {
 																params.MIN_ARRIVAL_RANGE,
 																params.PRIORITY);
 		
-		synthesizer.run(params.WORKNAME, params.controlValue, params.N_TASKSET,
+		String targetPath = String.format("%s/%s",params.BASE_PATH, params.controlValue);
+		synthesizer.run(targetPath, params.N_TASKSET,
 				params.TIMEUNIT, params.TARGET_UTILIZATION, params.DELTA_UTILIZATION,
 				params.N_TASK, params.RATIO_APERIODIC, params.MAX_ARRIVAL_RANGE);
 	}
@@ -58,13 +59,12 @@ public class TaskSetSynthesizer {
 		this.MINIMUM_RANGE = _minRangeAperiodic;
 	}
 	
-	public void run(String workName, String control, int nTaskset,
+	public void run(String targetPath, int nTaskset,
 	                 double TIMEUNIT, double targetU, double delta,
 	                 int nTask, double ratioAperiodic, int maxArrivalRange) {
 		
 		// Generate result path
-		String basePath = String.format("%s", workName);
-		File path = new File(String.format("%s/%s",basePath, control));
+		File path = new File(targetPath);
 		if (!path.exists()) path.mkdirs();
 		
 		for (int x=0; x<nTaskset; x++) {

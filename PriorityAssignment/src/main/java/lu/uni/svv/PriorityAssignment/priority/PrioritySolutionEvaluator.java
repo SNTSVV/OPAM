@@ -24,32 +24,20 @@ import lu.uni.svv.PriorityAssignment.utils.ListUtil;
 public class PrioritySolutionEvaluator implements SolutionListEvaluator<PrioritySolution> {
 	
 	// Internal Values
-	public int               SIMULATION_TIME;	// Total simulation time // to treat all time values as integer
-	public TaskDescriptor[]  Tasks;	            // Task information
 	private List<Arrivals[]> ArrivalsList;	    // Arrivals
-	public List<Arrivals[]> TestArrivalsList;	// Test Arrivals
+	public List<Arrivals[]>  TestArrivalsList;	// Test Arrivals
 	private Class            schedulerClass;    // scheduler will be used to evaluate chromosome
 	
 	
-	public PrioritySolutionEvaluator(TaskDescriptor[] _tasks, List<Arrivals[]> _arrivalsList, List<Arrivals[]> _testArrivalsList, int _simulationTime, String _schedulerName) throws NumberFormatException, IOException {
+	public PrioritySolutionEvaluator(List<Arrivals[]> _arrivalsList, List<Arrivals[]> _testArrivalsList) throws NumberFormatException, IOException {
 		
 		// Set environment of this problem.
-		this.Tasks = _tasks;
 		this.ArrivalsList = _arrivalsList;
 		this.TestArrivalsList = _testArrivalsList;
-		this.SIMULATION_TIME = _simulationTime;
-		
-		// Create Scheduler instance
-		try {
-			String packageName = this.getClass().getPackage().getName();
-			packageName = packageName.substring(0, packageName.lastIndexOf("."));
-			this.schedulerClass = Class.forName(packageName + ".scheduler." + _schedulerName);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
+
+
 	}
-	
+
 	
 	@Override
 	public List<PrioritySolution> evaluate(List<PrioritySolution> population, Problem<PrioritySolution> problem) {
@@ -59,7 +47,7 @@ public class PrioritySolutionEvaluator implements SolutionListEvaluator<Priority
 		try {
 			int x=0;
 			for(PrioritySolution solution:population){
-				evaluateSolution(solution, ArrivalsList, false, false, 0);
+				evaluateSolution( (PriorityProblem)problem, solution, ArrivalsList, false, false, 0);
 				x++;
 //				JMetalLogger.logger.info(String.format("\tEvaluated solution [%d/%d] with %s arrivals", x, population.size(), ArrivalsList.size()));
 			}
@@ -77,7 +65,7 @@ public class PrioritySolutionEvaluator implements SolutionListEvaluator<Priority
 		try {
 			int x=0;
 			for(PrioritySolution solution:population){
-				evaluateSolution(solution, TestArrivalsList, true, x==0,0);
+				evaluateSolution( (PriorityProblem)problem, solution, TestArrivalsList, true, x==0,0);
 				x++;
 //				JMetalLogger.logger.info(String.format("\tEvaluated solution for external [%d/%d] with %s arrivals", x, population.size(), TestArrivalsList.size()));
 			}
@@ -91,17 +79,14 @@ public class PrioritySolutionEvaluator implements SolutionListEvaluator<Priority
 	}
 	
 	
-	public void evaluateSolution(PrioritySolution solution, List<Arrivals[]> arrivalsList, boolean isSimple, boolean ext, int showingProgress)
+	public void evaluateSolution(PriorityProblem _problem, PrioritySolution solution, List<Arrivals[]> arrivalsList, boolean isSimple, boolean ext, int showingProgress)
 			throws IllegalAccessException, InvocationTargetException, InstantiationException {
 		
 		// convert solution to priorities array
-		Integer[] priorities = new Integer[solution.getNumberOfVariables()];
-		solution.getVariables().toArray(priorities);
-		
+		Integer[] priorities = solution.toArray();
+
 		// prepare scheduler
-		Constructor constructor = schedulerClass.getConstructors()[0];
-		Object[] parameters = {this.Tasks, SIMULATION_TIME};
-		RTScheduler scheduler = null;
+		RTScheduler scheduler = _problem.getScheduler();;
 		
 		// calculate fitness values for each arrivals
 		double[] fitnessList = new double[arrivalsList.size()];
@@ -115,10 +100,9 @@ public class PrioritySolutionEvaluator implements SolutionListEvaluator<Priority
 		
 		for (int x=0; x< arrivalsList.size(); x++){
 			// run scheduler
-			scheduler = (RTScheduler)constructor.newInstance(parameters);
 			scheduler.run(arrivalsList.get(x), priorities);
 			
-			// make reuslt
+			// make result
 			Schedule[][] schedules = scheduler.getResult();
 			ScheduleCalculator calculator = new ScheduleCalculator(schedules, Settings.TARGET_TASKS);
 			fitnessList[x] = calculator.distanceMargin(true);
@@ -150,10 +134,12 @@ public class PrioritySolutionEvaluator implements SolutionListEvaluator<Priority
 		// save fitness information
 		int idx = selectedFitnessValue(fitnessList);
 		solution.setObjective(0, -mergeFitnessValues(fitnessList));
-		solution.setObjective(1, -ConstrantsEvaluator.calculate(solution, Tasks));
+		solution.setObjective(1, -ConstrantsEvaluator.calculate(solution, _problem.Tasks));
 		solution.setAttribute("DeadlineMiss", mergeDeadlineMiss(deadlineList));
 		solution.setAttribute("FitnessIndex", idx);
 		solution.setAttribute("Maximums", maximums[idx]);
+		solution.setAttribute("FitnessList", fitnessList);
+		solution.setAttribute("DeadlineList", deadlineList);
 		if (Settings.PRINT_FINAL_DETAIL)
 			solution.setAttribute("schedulesList", schedulesList);
 

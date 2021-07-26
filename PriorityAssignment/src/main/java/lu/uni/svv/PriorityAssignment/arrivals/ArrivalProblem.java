@@ -128,6 +128,7 @@ public class ArrivalProblem extends AbstractGenericProblem<ArrivalsSolution> {
 			_solution.setAttribute("FitnessIndex", idx);
 			_solution.setAttribute("Maximums", maximums[idx]);
 			_solution.setAttribute("DMString", deadlineStrings[idx]);
+			_solution.setAttribute("FitnessList", fitnessList);
 			
 		} catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
 			e.printStackTrace();

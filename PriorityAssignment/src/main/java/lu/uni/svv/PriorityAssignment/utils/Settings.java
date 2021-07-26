@@ -2,6 +2,9 @@ package lu.uni.svv.PriorityAssignment.utils;
 
 import java.io.*;
 import java.lang.reflect.Field;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -14,7 +17,6 @@ public class Settings {
 	// common parameter
 	public static String  INPUT_FILE          = "";
 	public static String  BASE_PATH           = "results";
-	public static String  WORKNAME            = "";
 	public static int     RUN_NUM             = 0;
 	public static int     RUN_START           = 1;
 	public static int     RUN_CNT             = 0;
@@ -27,14 +29,14 @@ public class Settings {
 	public static String  TARGET_TASKLIST     = "";
 	public static int[]   TARGET_TASKS        = null;
 	public static double  TIME_QUANTA         = 0.1;
-	public static double  TIME_MAX            = 60000;
+	public static double  TIME_MAX            = 60000;  // ase unit ms
 	public static boolean ALLOW_OFFSET_RANGE  = false;
 	public static boolean EXTEND_SIMULATION_TIME = true;
 	public static int     ADDITIONAL_SIMULATION_TIME = 0;
 	public static boolean EXTEND_SCHEDULER    = true;
-	public static double  FD_BASE             = 2; //1.005
+	public static double  FD_BASE             = 2;
 	public static double  FD_EXPONENT         = 10000;
-	public static int     MAX_OVER_DEADLINE   = 0;  // 60000, base unit ms
+	public static int     MAX_OVER_DEADLINE   = 1000;  // ase unit ms
 	public static boolean VERIFY_SCHEDULE     = false;
 
 	// Phase1 GA
@@ -63,12 +65,14 @@ public class Settings {
 	public static String  TEST_PATH           = "";
 	public static int     NUM_TEST            = 10;
 	public static boolean NOLIMIT_POPULATION  = false;
+	public static String  TIME_LIMIT          = "";
+	public static long    TIME_LIMITATION     = 0;
 	
 	//Results Evaluator options
 	public static String COMPARE_PATH1        = "";
 	public static String COMPARE_PATH2        = "";
-	public static String OUTPUT_PATH        = "";
-	
+	public static String OUTPUT_PATH          = "";
+	public static String APPROACHES           = "";
 	
 	public Settings()
 	{
@@ -81,7 +85,6 @@ public class Settings {
 		parser.addOption(false,"SettingFile", DataType.STRING, "f", null, "Base setting file.", SettingFile);
 		parser.addOption(false,"INPUT_FILE", DataType.STRING, null, "data", "input data that including job information");
 		parser.addOption(false,"BASE_PATH", DataType.STRING, "b", null, "Base path to save the result of experiments");
-		parser.addOption(false,"WORKNAME", DataType.STRING, "w", "workName", "the path for saving workdata in second phase");
 		parser.addOption(false,"RUN_NUM", DataType.INTEGER, null, "runID", "Specific run ID when you execute run separately");
 		parser.addOption(false,"CYCLE_NUM", DataType.INTEGER, null, "cycle", "Specific run ID when you execute run separately");
 		parser.addOption(false,"N_CPUS", DataType.INTEGER, null, "cpus", "the number of CPUs");
@@ -126,16 +129,17 @@ public class Settings {
 		parser.addOption(false,"P2_GROUP_FITNESS", DataType.STRING, null, "fg2", "one type of fitness among average, maximum or minimum");
 		parser.addOption(false,"P2_SIMPLE_SEARCH", DataType.BOOLEAN, null, "simpleP2", "Simple search mode, not using crossover and mutation just produce children randomly in phase 2");
 		
-		parser.addOption(false,"TEST_GENERATION", DataType.STRING, null, "workType", "search mode: Normal, Random, Initial");
+		parser.addOption(false,"TEST_GENERATION", DataType.STRING, null, "genTest", "search mode: Normal, Random, Initial");
 		parser.addOption(false,"TEST_PATH", DataType.STRING, null, "testPath", "path to load test data");
 		parser.addOption(false,"NUM_TEST", DataType.INTEGER, null, "numTest", "The number of test arrivals");
 		parser.addOption(false,"NOLIMIT_POPULATION", DataType.BOOLEAN, null, "nolimitPop", "Apply limit population for external fitness");
-		
+		parser.addOption(false,"TIME_LIMIT", DataType.STRING, null, "timeLimit", "execution time of limitation specify by a format HH:MM:SS");
+
 		//experiment options
 		parser.addOption(false,"COMPARE_PATH1", DataType.STRING, null, "compare1", "target path to compare");
 		parser.addOption(false,"COMPARE_PATH2", DataType.STRING, null, "compare2", "target path to compare");
 		parser.addOption(false,"OUTPUT_PATH", DataType.STRING, null, "output", "output path for QI evaluators");
-		
+		parser.addOption(false,"APPROACHES", DataType.STRING, null, "apprs", "a list of approaches");
 		
 		// parsing args
 		try{
@@ -161,6 +165,19 @@ public class Settings {
 		
 		Settings.TARGET_TASKS = convertToIntArray(Settings.TARGET_TASKLIST);
 		Arrays.sort(Settings.TARGET_TASKS);
+		if (Settings.TIME_LIMIT.length()>0){
+			Settings.TIME_LIMITATION = convertTimeToLong(Settings.TIME_LIMIT);
+		}
+	}
+
+	public static long convertTimeToLong(String _timeStr){
+		long milliseconds=0;
+		_timeStr = "1970-01-01 "+_timeStr+" GMT";
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z");
+		ZonedDateTime zonedDateTime = ZonedDateTime.parse(_timeStr, formatter);
+		LocalDateTime ldt = zonedDateTime.toLocalDateTime();
+		milliseconds = zonedDateTime.toEpochSecond()*1000;
+		return milliseconds;
 	}
 	
 	public static int[] convertToIntArray(String commaSeparatedStr) {

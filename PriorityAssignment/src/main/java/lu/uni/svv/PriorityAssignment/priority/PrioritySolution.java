@@ -1,6 +1,8 @@
 package lu.uni.svv.PriorityAssignment.priority;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.logging.Level;
 import org.json.simple.JSONArray;
@@ -22,6 +24,7 @@ import lu.uni.svv.PriorityAssignment.utils.Settings;
 @SuppressWarnings("serial")
 public class PrioritySolution extends AbstractGenericSolution<Integer, PriorityProblem> {//implements Solution<Integer>{
 	private static long UUID = 1L;
+
 	public static void initUUID(){
 		PrioritySolution.UUID = 1L;
 	}
@@ -72,7 +75,17 @@ public class PrioritySolution extends AbstractGenericSolution<Integer, PriorityP
 			this.setVariableValue(i, _priorities[i]);
 		}
 	}
-	
+
+	public PrioritySolution(PriorityProblem _problem, String _jsonString) throws Exception{
+		super(_problem);
+		ID = PrioritySolution.UUID++;
+
+		Integer[] priorities = loadFromJSON(_jsonString);
+		for (int i = 0; i < this.problem.getNumberOfVariables(); ++i) {
+			this.setVariableValue(i, priorities[i]);
+		}
+	}
+
 	public PrioritySolution(PrioritySolution _solution) {
 		super(_solution.problem);
 		ID = _solution.ID;
@@ -119,9 +132,9 @@ public class PrioritySolution extends AbstractGenericSolution<Integer, PriorityP
 		sb.append(", ");
 		sb.append(getObjective(1));
 		sb.append("], ");
-		if (attributes.containsKey("DeadlineMiss")) {
+		if (attributes.containsKey("DeadlineList")) {
 			sb.append("DM: [");
-			int[] dms = (int[])attributes.get("DeadlineMiss");
+			int[] dms = (int[])attributes.get("DeadlineList");
 			for(int i=0; i<dms.length; i++){
 				sb.append(dms[i]);
 				sb.append(",");
@@ -166,39 +179,26 @@ public class PrioritySolution extends AbstractGenericSolution<Integer, PriorityP
 	public boolean hasAttribute(Object key){
 		return this.attributes.containsKey(key);
 	}
+
 	/**
-	 * Load solution from file (static function)
-	 * @param _problem
-	 * @param _filepath
+	 * Load solution from JSON string
+	 * @param _jsonString
 	 * @return
 	 */
-	public static PrioritySolution loadFromJSON(PriorityProblem _problem, String _filepath){
+	public Integer[] loadFromJSON(String _jsonString) throws ParseException{
 		Integer[] variables = null;
-		FileReader reader = null;
-		
-		try {
-			reader = new FileReader(_filepath);
-			JSONParser parser = new JSONParser();
-			JSONArray json = (JSONArray) parser.parse(reader);
-			
-			variables = new Integer[json.size()];
-			for (int i = 0; i < json.size(); i++) {
-				variables[i] = ((Long)json.get(i)).intValue();
-			}
+
+		JSONParser parser = new JSONParser();
+		JSONArray json = (JSONArray) parser.parse(_jsonString);
+
+		variables = new Integer[json.size()];
+		for (int i = 0; i < json.size(); i++) {
+			variables[i] = ((Long)json.get(i)).intValue();
 		}
-		catch (IOException | ParseException e){
-			e.printStackTrace();
-		} finally {
-			try {
-				if (reader != null)
-					reader.close();
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
-		}
-		return new PrioritySolution(_problem, variables);
+
+		return variables;
 	}
-	
+
 	@Override
 	protected void finalize() throws Throwable{
 		for (int i=0; i<this.getNumberOfVariables(); i++)

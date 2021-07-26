@@ -46,7 +46,7 @@ public class TaskDescriptorTest extends TestCase {
 		if (Settings.P2_MUTATION_PROB==0)
 			Settings.P2_MUTATION_PROB = 1.0/input.length;
 		
-		PriorityProblem p = new PriorityProblem(input, simulationTime);
+		PriorityProblem p = new PriorityProblem(input, simulationTime, Settings.SCHEDULER);
 		Double[] range1 = p.getFitnessRange(0);
 		Double[] range2 = p.getFitnessRange(1);
 		System.out.println(String.format("[1] min fitness: %e, max fitness: %e", range1[0], range1[1]));

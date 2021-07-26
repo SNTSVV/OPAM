@@ -7,7 +7,6 @@ import lu.uni.svv.PriorityAssignment.task.TaskDescriptor;
 import org.uma.jmetal.util.JMetalLogger;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
@@ -22,27 +21,26 @@ public class FileManager {
 	 * Load Test Arrivals
 	 * @return
 	 */
-	public static List<Arrivals[]> LoadTestArrivals(TaskDescriptor[] _input, int _simulationTime) throws Exception{
-		JMetalLogger.logger.info("Loading test arrivals....");
+	public static List<Arrivals[]> LoadTestArrivals(String _path, TaskDescriptor[] _input, int _simulationTime, int _numCnt) throws Exception{
+//		JMetalLogger.logger.info("Loading test arrivals....");
 		ArrivalProblem problemA = new ArrivalProblem(_input, null, _simulationTime, Settings.SCHEDULER);
 		List<Arrivals[]> arrivals = new ArrayList<>();
 		
 		// load test file names
-		String path = Settings.BASE_PATH + "/" + Settings.TEST_PATH;
-		BufferedReader reader = new BufferedReader(new FileReader(path));
+		BufferedReader reader = new BufferedReader(new FileReader(_path));
 		String line = reader.readLine();
 		while(line!=null){
 			line = reader.readLine();
-			if (line==null || line.trim()=="") break;
+			if (line==null || line.trim().compareTo("")==0) break;
 			String[] items = line.split("\t");
 			ArrivalsSolution sol = ArrivalsSolution.loadFromJSONString(problemA, items[items.length-1]);
 			arrivals.add(sol.toArray());
 		}
 		
 		// selecting test files
-		if (Settings.NUM_TEST!=0) {
+		if (_numCnt!=0) {
 			RandomGenerator random = new RandomGenerator();
-			while (arrivals.size() > Settings.NUM_TEST) {
+			while (arrivals.size() > _numCnt) {
 				int idx = random.nextInt(1, arrivals.size()) - 1;
 				arrivals.remove(idx);
 			}
@@ -51,7 +49,7 @@ public class FileManager {
 		if (arrivals.size()==0){
 			throw new Exception("No file to load arrivals");
 		}
-		JMetalLogger.logger.info("Loading test arrivals....Done");
+//		JMetalLogger.logger.info("Loading test arrivals....Done");
 		return arrivals;
 	}
 	

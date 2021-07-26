@@ -20,6 +20,7 @@ public abstract class AbstractArrivalGA extends AbstractGeneticAlgorithm<Arrival
 	protected Comparator<ArrivalsSolution> comparator;
 	protected SolutionPrinter printer;
 	protected List<ArrivalsSolution> initials;
+	protected long startTime;
 	
 	/**
 	 * Constructor
@@ -43,6 +44,9 @@ public abstract class AbstractArrivalGA extends AbstractGeneticAlgorithm<Arrival
 		
 		this.initials = _initial;
 		this.printer = new SolutionPrinter(problem.getNumberOfVariables(), _cycle);
+
+		this.startTime = System.currentTimeMillis();
+
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////
@@ -70,8 +74,13 @@ public abstract class AbstractArrivalGA extends AbstractGeneticAlgorithm<Arrival
 	
 	@Override
 	protected boolean isStoppingConditionReached() {
-		// Same code with library SSGA code
-		return (iterations >= maxIterations);
+		if (Settings.TIME_LIMITATION != 0){
+			long ts = System.currentTimeMillis();
+			return (ts-this.startTime) > Settings.TIME_LIMITATION;
+		}
+		else{
+			return (iterations >= maxIterations);
+		}
 	}
 	
 	
@@ -111,7 +120,7 @@ public abstract class AbstractArrivalGA extends AbstractGeneticAlgorithm<Arrival
 	public void updateProgress() {
 		// Add logging message and garbage collection
 		iterations++;
-//		JMetalLogger.logger.info(String.format("[%s] iteration: %d", getName(), iterations));
+		JMetalLogger.logger.info(String.format("[%s] iteration: %d", getName(), iterations));
 		if (Settings.PRINT_FITNESS) {
 			Collections.sort(getPopulation(), comparator);
 			printer.print(getPopulation(), iterations);

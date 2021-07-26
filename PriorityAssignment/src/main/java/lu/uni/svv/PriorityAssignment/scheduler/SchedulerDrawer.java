@@ -8,6 +8,8 @@ import lu.uni.svv.PriorityAssignment.utils.Settings;
 import org.uma.jmetal.util.JMetalLogger;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.ConsoleHandler;
@@ -56,8 +58,11 @@ public class SchedulerDrawer {
 
 		//TODO:: need to debug (these two lines are added by the class modification)
 		TaskDescriptor[] input = TaskDescriptor.loadFromCSV(PATH + "input.csv", Settings.TIME_MAX, Settings.TIME_QUANTA);
-		PriorityProblem problem = new PriorityProblem(input, SIMULATION_TIME);
-		PrioritySolution solution = PrioritySolution.loadFromJSON(problem, PATH +String.format("/_priorities/priority_%d_num%d.json",solutionID, testNum));
+		PriorityProblem problem = new PriorityProblem(input, SIMULATION_TIME, Settings.SCHEDULER);
+
+		String filepath = String.format("%s/_priorities/sol%d_num%d.json", PATH, solutionID, testNum);
+		String json = new String( Files.readAllBytes( Paths.get(filepath) ) );
+		PrioritySolution solution = new PrioritySolution(problem, json);
 		
 		String filename = String.format(PATH + "/draws/schedule_%d_num%d.txt", solutionID, testNum);
 		drawSchedule(schedules, solution.toArray(), SIMULATION_TIME, filename);

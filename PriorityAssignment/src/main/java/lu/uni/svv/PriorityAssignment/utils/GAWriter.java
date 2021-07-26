@@ -20,9 +20,6 @@ public class GAWriter {
 		// Only apply to multi run mode
 		if (_path == null){
 			_path = Settings.BASE_PATH;
-			if (Settings.WORKNAME.length() != 0){
-				_path += "/" + Settings.WORKNAME;
-			}
 			if (Settings.RUN_NUM != 0){
 				_path += String.format("/Run%02d", Settings.RUN_NUM);
 			}

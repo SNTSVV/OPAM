@@ -5,6 +5,8 @@ import java.lang.reflect.Constructor;
 import java.util.*;
 import java.util.logging.Level;
 
+import lu.uni.svv.PriorityAssignment.priority.search.PriorityNSGAII;
+import lu.uni.svv.PriorityAssignment.priority.search.PriorityRandom;
 import lu.uni.svv.PriorityAssignment.utils.Monitor;
 import org.uma.jmetal.operator.CrossoverOperator;
 import org.uma.jmetal.operator.MutationOperator;
@@ -43,7 +45,7 @@ public class CoEvolve {
 		PriorityProblem problemP = null;
 		List<PrioritySolution> P = null;
 		
-		problemP = new PriorityProblem(input, simulationTime);
+		problemP = new PriorityProblem(input, simulationTime, Settings.SCHEDULER);
 		P = createInitialPriorities(Settings.P2_POPULATION, priorityEngineer, problemP);
 		
 		GAWriter internalWriter = null;
@@ -63,7 +65,7 @@ public class CoEvolve {
 			
 			// Step2. [Phase 2] find the best pareto front of priority assignment
 			List<Arrivals[]> arrivals = ArrivalsSolution.toArrays(A);
-			PrioritySolutionEvaluator evaluator = new PrioritySolutionEvaluator(input, arrivals, testArrivals, simulationTime, Settings.SCHEDULER);
+			PrioritySolutionEvaluator evaluator = new PrioritySolutionEvaluator(arrivals, testArrivals);
 			P = this.searchPriorities(problemP, evaluator, cycle, P);  // update bestSolutions inside
 
 			// test
@@ -157,10 +159,19 @@ public class CoEvolve {
 		selection = new BinaryTournamentSelection<>(new RankingAndCrowdingDistanceComparator<>());
 		
 		// Define algorithm
-		PriorityNSGAII algorithm =	new PriorityNSGAII(
-						_cycle, _initial, best, _problem,
-						Settings.P2_ITERATIONS, Settings.P2_POPULATION, Settings.P2_POPULATION, Settings.P2_POPULATION,
-						crossover, mutation, selection, _evaluator);
+		AbstractPrioritySearch algorithm = null;
+		if (Settings.P2_SIMPLE_SEARCH){
+			algorithm =	new PriorityRandom(
+					_cycle, _initial, best, _problem,
+					Settings.P2_ITERATIONS, Settings.P2_POPULATION, Settings.P2_POPULATION, Settings.P2_POPULATION,
+					crossover, mutation, selection, _evaluator);
+		}
+		else{
+			algorithm = new PriorityNSGAII(
+					_cycle, _initial, best, _problem,
+					Settings.P2_ITERATIONS, Settings.P2_POPULATION, Settings.P2_POPULATION, Settings.P2_POPULATION,
+					crossover, mutation, selection, _evaluator);
+		}
 		
 		// execute algorithm in thread
 		AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm).execute();
