@@ -56,16 +56,18 @@ class ResultColllector():
             data[items[0]] = float(items[1].strip())
         return data
 
-    def merge_time(self, _dirpath, _outputname=None, _exptions=None):
-        if _outputname is None:
-            _outputname = os.path.join(_dirpath, 'timeinfo.csv')
+    def merge_time(self, _args):
+        # parameter passing
+        _dirpath = _args.targetPath
+        _outputname = _args.outputName if _args.outputName is not None else os.path.join(_dirpath, 'timeinfo.csv')
+        _exceptions = _args.exceptions
 
         output = open(_outputname, "w")
         output.write("Variable,Index,Run,Total,Search,P1,P2,Ex,InitHeap,UsedHeap,CommitHeap,MaxHeap,MaxNonHeap\n")
 
         targets = self.expandDirs([{'path':_dirpath}], 'Variable')
         for target in targets:
-            if _exptions is not None and target['Variable'] in _exptions: continue
+            if _exceptions is not None and target['Variable'] in _exceptions: continue
 
             subs = self.expandDirs([{'path':target['path']}], 'Index')
             subs = self.expandDirs(subs, 'Run', _ptn=r'\d+')
@@ -93,9 +95,11 @@ class ResultColllector():
             progress.close()
         output.close()
 
-    def merge_time_industrial(self, _dirpath, _outputname=None, _exptions=None):
-        if _outputname is None:
-            _outputname = os.path.join(_dirpath, 'timeinfo.csv')
+    def merge_time_industrial(self, _args):
+        # parameter passing
+        _dirpath = _args.targetPath
+        _outputname = _args.outputName if _args.outputName is not None else os.path.join(_dirpath, 'timeinfo.csv')
+        _exceptions = _args.exceptions if _args.exceptions is not None else []
 
         # prepare target dirs
         targets = self.expandDirs([{'path':_dirpath}], 'Variable', _ptn=r'\w+')
@@ -107,6 +111,8 @@ class ResultColllector():
 
         progress = tqdm(desc='Collecting data', total=len(targets), unit=' #', postfix=None)
         for item in targets:
+            if item['Variable'] in _exceptions: continue
+
             timeInfo = self.load_time(os.path.join(item['path'], '_result.txt'))
             # item['time'] = timeInfo
 
@@ -131,7 +137,7 @@ class ResultColllector():
     ##################################################
     # Collecting functions for fitness
     ##################################################
-    def load_fitness(self, _filepath):
+    def load_fitness(self, _filepath, _targetCycle):
         f = open(_filepath)
         lines = f.readlines()
         f.close()
@@ -151,14 +157,17 @@ class ResultColllector():
             # dm = int(items[7])
             if cycle==0:
                 if not (iter==0 and sID==1): continue
-            elif not (cycle==1000 and iter==2): continue
+            elif not (cycle==_targetCycle and iter==2): continue
             data.append(line)
             # data[cycle] = {titles[0]:cycle, titles[3]:idx, titles[4]:sID, titles[5]:fD, titles[6]:fC, titles[7]:dm}
         return lines[0], data
 
-    def merge_fitness(self, _dirpath, _outputname=None, _exptions=None):
-        if _outputname is None:
-            _outputname = os.path.join(_dirpath, 'fitness.csv')
+    def merge_fitness(self, _args):
+        # parameter passing
+        _dirpath = _args.targetPath
+        _outputname = _args.outputName if _args.outputName is not None else os.path.join(_dirpath, 'fitness.csv')
+        _exceptions = _args.exceptions
+        _targetCycle = _args.cycle if _args.cycle is not None else 1000
 
         # preparing target dirs
         targets = self.expandDirs([{'path':_dirpath}], 'Variable')
@@ -169,7 +178,7 @@ class ResultColllector():
 
         # collecting
         for target in targets:
-            if _exptions is not None and target['Variable'] in _exptions: continue
+            if _exceptions is not None and target['Variable'] in _exceptions: continue
 
             # expand sub-dirs for each target
             subs = self.expandDirs([{'path':target['path']}], 'Index')
@@ -177,7 +186,7 @@ class ResultColllector():
 
             progress = tqdm(desc='Collecting data', total=len(subs), unit=' #', postfix=None)
             for item in subs:
-                titles, data = self.load_fitness(os.path.join(item['path'], '_fitness/fitness_external.csv'))
+                titles, data = self.load_fitness(os.path.join(item['path'], '_fitness/fitness_external.csv'), _targetCycle)
                 if firstWork is True:
                     output.write("Variable,Index,Run,%s"%titles)
                     firstWork = False
@@ -189,9 +198,12 @@ class ResultColllector():
             progress.close()
         output.close()
 
-    def merge_fitness_industrial(self, _dirpath, _outputname=None, _exptions=None):
-        if _outputname is None:
-            _outputname = os.path.join(_dirpath, 'fitness.csv')
+    def merge_fitness_industrial(self, _args):
+        # parameter passing
+        _dirpath = _args.targetPath
+        _outputname = _args.outputName if _args.outputName is not None else os.path.join(_dirpath, 'fitness.csv')
+        _exceptions = _args.exceptions if _args.exceptions is not None else []
+        _targetCycle = _args.cycle if _args.cycle is not None else 1000
 
         # preparing target dirs
         targets = self.expandDirs([{'path':_dirpath}], 'Variable', _ptn=r'\w+')  # subject level folder
@@ -205,7 +217,9 @@ class ResultColllector():
         # working
         progress = tqdm(desc='Collecting data', total=len(targets), unit=' #', postfix=None)
         for target in targets:
-            titles, data = self.load_fitness(os.path.join(target['path'], '_fitness/fitness_external.csv'))
+            if target['Variable'] in _exceptions: continue
+
+            titles, data = self.load_fitness(os.path.join(target['path'], '_fitness/fitness_external.csv'), _targetCycle)
             if firstWork is True:
                 output.write("Variable,Index,Run,%s"%titles)
                 firstWork = False
@@ -213,6 +227,60 @@ class ResultColllector():
                 output.write("%s,%d,%d,%s"% (target['Variable'], index, int(target['Run']),line))
             output.flush()
             progress.update(1)
+            progress.set_postfix_str(target['path'])
+        progress.close()
+        output.close()
+
+    ##################################################
+    # Collecting functions for another external fitness values
+    ##################################################
+    def load_another_test_fitness(self, _filepath):
+        try:
+            f = open(_filepath)
+            lines = f.readlines()
+            f.close()
+            return lines[0], lines[1:]
+        except Exception as e:
+            return None, None
+
+    def merge_test_fitness_industrial(self, _args):
+        # parameter passing
+        _dirpath = _args.targetPath
+        _outputname = _args.outputName if _args.outputName is not None else os.path.join(_dirpath, 'fitness.csv')
+        _testName = _args.testName if _args.testName is not None else ""
+        _exceptions = _args.exceptions
+
+        if _dirpath is None or _dirpath=="":
+            print("Please specify the target directory path, e.g. \"results/RQ1/OPAM\"")
+            return
+
+        if _testName is None or _testName=="":
+            print("Please specify the test type name, e.g. \"Adaptive10\"")
+            return
+
+        # preparing target dirs
+        targets = self.expandDirs([{'path':_dirpath}], 'Variable', _ptn=r'\w+')  # subject level folder
+        targets = self.expandDirs(targets, 'Run', _ptn=r'\d+')
+
+        # preparing output file
+        output = open(_outputname, "w")
+        firstWork = True
+        index = 0
+
+        # working
+        progress = tqdm(desc='Collecting data', total=len(targets), unit=' #', postfix=None)
+        for target in targets:
+            progress.update(1)
+            titles, data = self.load_another_test_fitness('%s/_external/fitness_%s.csv'%(target['path'],_testName))
+            if titles is None:
+                print("No data file in the path: "+ target['path'])
+                continue
+            if firstWork is True:
+                output.write("Variable,Run,%s"%titles)
+                firstWork = False
+            for line in data:
+                output.write("%s,%d,%s"% (target['Variable'], int(target['Run']), line))
+            output.flush()
             progress.set_postfix_str(target['path'])
         progress.close()
         output.close()
@@ -227,6 +295,8 @@ def parse_arg():
     parser.add_argument('-p', dest='pattern', type=str, default=None, help='sub dir pattern')
     parser.add_argument('-e', dest='exceptions', type=str, default="", help='except variables')
     parser.add_argument('-f', dest='function', type=str, default="", help='the name of working function')
+    parser.add_argument('-c', dest='cycle', type=int, default=None, help='number of cycles')
+    parser.add_argument('-tN', dest='testName', type=str, default=None, help='test name')
 
     # parameter parsing
     args = parser.parse_args(args=sys.argv[1:])
@@ -252,8 +322,6 @@ if __name__ == "__main__":
     args = parse_arg()
     print("###### %s ########" % args.function)
     print("Work with %s" % args.targetPath)
+
     obj = ResultColllector()
-    if args.pattern is None:
-        getattr(obj, args.function)(args.targetPath, args.outputName, args.exceptions)
-    else:
-        getattr(obj, args.function)(args.targetPath, args.pattern, args.outputName, args.exceptions)
+    getattr(obj, args.function)(args)

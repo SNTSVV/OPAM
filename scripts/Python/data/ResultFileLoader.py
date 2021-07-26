@@ -5,18 +5,8 @@ import os
 import json
 
 class ResultFileLoader():
-    basePath = ''
-    formatSchedule = '_schedules2/ext_sol%d_arr%d.json'
-    formatPriority = '_priorities2/ext_sol%d_arr%d.json'
-    formatArrivals = '_arrivals2/ext_sol%d_arr%d.json'
-    formatInput = 'input.txt'
-
-    def __init__(self, _basePath):
-        if _basePath is None or _basePath=="":
-            raise Exception('Please give a basePath')
-        if os.path.exists(_basePath) is False:
-            raise Exception('Specified path does not exists! : %s'%_basePath)
-        self.basePath = _basePath
+    def __init__(self):
+        pass
 
     def load_schedules(self, _filepath):
         if not os.path.exists(_filepath): raise FileNotFoundError("No file \"%s\""%_filepath)
