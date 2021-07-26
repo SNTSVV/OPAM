@@ -11,14 +11,23 @@
 target/
 metas/
 META-INF/
+jMetal/
+
+############################
+# scripts
+############################
+*.Rproj
+__pycache__
+*.pyc
+.Rproj.user/
+.RData
+.Rhistory
 
 ############################
 ## log files
 ############################
 *.tsv
 *.log
-*.log
-*.log.*
 
 ############################
 ## Other stttings
@@ -26,5 +35,3 @@ META-INF/
 __*
 .*
 venv/
-backup/
-scripts/R
