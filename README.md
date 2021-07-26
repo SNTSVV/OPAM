@@ -16,6 +16,7 @@ OPAM runs on the following operating systems:
 ### OPAM requires the following tools:
 - Java 1.8.0.162  (Dependencies: jMetal 5.9, gson 2.8.6, commons-math3 3.6.1)
 - Python 3.7+     (Dependencies: tqdm)
+- R 4.1.0+        (Dependencies: effsize, scales, ggplot2, latex2exp, gridExtra)
 
 
 ### Repository description
@@ -36,15 +37,19 @@ OPAM runs on the following operating systems:
 
 ##### =EXP1=
 * Step 1: Run *exp1.sh* for each subject
-* Step 2: See output files in *results/RQ1_OPAM* and *results/RQ1_RS*
-
+* Step 2: See output files in *results/RQ1/OPAM* and *results/RQ1/RS*
 
 ##### =EXP2=
-* Step 1: Run *exp2.gen.sh*
-* Step 2: Run *exp2.1.sh* ~ *exp2.4.sh* 
-* Step 3: See output files in *results/RQ2*
+* Step 1: Run *exp2.sh* for each subject
+* Step 2: See output files in *results/RQ2/OPAM* and *results/RQ2/SEQ*
 
 
 ##### =EXP3=
-* Step 1: Running *exp3.sh*
-* Step 2: See output files in *results/RQ3*
+* Step 1: Run *exp3.gen.sh*
+* Step 2: Run *exp3.1.sh* ~ *exp3.4.sh* 
+* Step 3: See output files in *results/RQ3*
+
+
+##### =EXP4=
+* Step 1: Running *exp4.sh*
+* Step 2: See output files in *results/RQ4*

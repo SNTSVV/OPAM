@@ -1,8 +1,7 @@
 {
   // Common variables
   "INPUT_FILE"          : "res/industrial/ESAIL.csv",
-  "BASE_PATH"           : "results",
-  "WORKNAME"            : "TestEXP",
+  "BASE_PATH"           : "results/TestEXP",
   "RUN_NUM"             : 0,
   "RUN_START"           : 1,
   "RUN_CNT"             : 0,
@@ -20,6 +19,7 @@
   "EXTEND_SCHEDULER"    : true,
   "FD_BASE"             : 2,
   "FD_EXPONENT"         : 100,
+  "MAX_OVER_DEADLINE"   : 1000,
 
   // Genetic algorithm variables
   "P1_POPULATION"       : 10,
@@ -45,6 +45,7 @@
   // Test data
   "TEST_GENERATION"     : "",     // "", Random, Initial
   "TEST_PATH"           : "",
-  "NUM_TEST"            : 100,
-  "NOLIMIT_POPULATION"  : false
+  "NUM_TEST"            : 10,
+  "NOLIMIT_POPULATION"  : false,
+  "APPROACHES"          : ""
 }
