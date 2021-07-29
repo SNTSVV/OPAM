@@ -44,7 +44,7 @@ public class QIEvaluator {
 	////////////////////////////////////////////////////////
 	// non-static members
 	////////////////////////////////////////////////////////
-	public FrontNormalizer frontNormalizer = null;
+	public ExtendedFrontNormalizer frontNormalizer = null;
 	public List<GenericIndicator<PointSolution> > QIs = null;
 	public double[] defaults;
 	public String[] names;
@@ -105,7 +105,7 @@ public class QIEvaluator {
 		List<PointSolution> ref = this.getReferencePareto(jointPopulation);
 
 		// Data normalizing
-		this.frontNormalizer = new FrontNormalizer(jointPopulation) ;
+		this.frontNormalizer = new ExtendedFrontNormalizer(jointPopulation) ;
 		ArrayFront refFront = new ArrayFront(ref);
 		Front normalizedReferenceFront;
 		try{
@@ -151,8 +151,8 @@ public class QIEvaluator {
 		//if two pareto are identical, CI values is equal to 0.5
 		sb.append(String.format("%s,%s,%d", approach, subject, runID+1));
 		for (int q=0; q<defaults.length; q++){
-			sb.append(",");
-			sb.append(defaults[q]);
+			sb.append(",NA");
+//			sb.append(defaults[q]);
 		}
 		sb.append("\n");
 		return sb.toString();
