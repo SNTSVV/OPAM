@@ -23,11 +23,11 @@ EXT_TYPE <- NULL      # set this variable for another external fitness (default:
 SELECTED_TEST_NUM<- NULL    # Set for Ext results
 
 # When you want to generate the results for Ext (external E')
-RESULT_PATH <-sprintf('%s/results/RQ1-Ext', PROJECT_PATH)
+# RESULT_PATH <-sprintf('%s/results/RQ1-Ext', PROJECT_PATH)
 # EXT_TYPE <- "Adaptive10"      # set this variable for another external fitness (default: null)
 # EXT_TYPE <- "Worst10"      # set this variable for another external fitness (default: null)
 # EXT_TYPE <- "Random10"      # set this variable for another external fitness (default: null)
-EXT_TYPE <- "Adaptive500"      # set this variable for another external fitness (default: null)
+# EXT_TYPE <- "Adaptive500"      # set this variable for another external fitness (default: null)
 # EXT_TYPE <- "Random500"      # set this variable for another external fitness (default: null)
 # EXT_TYPE <- "Worst500"      # set this variable for another external fitness (default: null)
 # for the Adaptive10, Worst10, and Random10, they requires to select a test ID

@@ -16,8 +16,9 @@ getline<- function(item, measure, dtype, first, groupSize=4, stress=NULL){
         value <- item[item$valueType==dtype & item$Subject==subject,]$value
         p <- item[item$valueType=="p-value" & item$Subject==subject,]$value
         a12 <- item[item$valueType=="A12" & item$Subject==subject,]$value
-        
-        if (is.null(stress)==FALSE && p<0.05){
+        if (is.na(p)==TRUE) {
+            line <- sprintf("%s & -", line)
+        } else if (is.null(stress)==FALSE && p<0.05){
             if (stress=="normal"){
                 if (measure %in% c("HV", "C") && a12>0.5)
                     line <- sprintf("%s & \\cellcolor{blue!30}\\textbf{%.4f}", line, value)  #
@@ -54,7 +55,11 @@ getline_st<- function(item, measure, first, groupSize=4){
     for (subject in SUBJECTS){
         p <- item[item$valueType=="p-value" & item$Subject==subject,]$value
         a12 <- item[item$valueType=="A12" & item$Subject==subject,]$value
-        line <- sprintf("%s & %.2f$\\vert$%.2f", line, p, a12)
+        if (is.na(p)==TRUE){
+            line <- sprintf("%s & - $\\vert$ - ", line)
+        }else{
+            line <- sprintf("%s & %.2f$\\vert$%.2f", line, p, a12)
+        }
     }
     line <- sprintf("%s \\\\\n", line)
     return (line)

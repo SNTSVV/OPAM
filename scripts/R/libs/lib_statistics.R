@@ -3,7 +3,21 @@ suppressMessages(library(effsize))
 #################################################################
 # get statistical test results (p-value and A12) comparing two approaches in last pareto front
 ##################################################################
+check.na <- function(listitem){
+    for (value in listitem){
+        if (is.na(value)==TRUE) return (TRUE)
+    }
+    return (FALSE)
+}
+
 getStatisticalTest<-function(ga, gb, reverse=FALSE){
+    if ( check.na(ga)==TRUE | check.na(gb)==TRUE){
+        ret <- list()
+        ret[[1]] <- NA
+        ret[[2]] <- NA
+        ret[[3]] <- NA
+        return (ret)
+    }
     w <- wilcox.test(ga, y = gb, alternative = c("two.sided"))
     if (reverse == TRUE){
         vda<- VD.A(gb,ga)
