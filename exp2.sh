@@ -28,12 +28,12 @@ SEARCH_TIME="07:30:00"
 ######################################################
 # Generate test arrivals (Adaptive random search)
 # Execute OPAM (${NUM_RUNS} runs will be executed)
-${CMD_PREFIX} java -jar artifacts/OPAM.jar --genTest Adaptive --numTest ${NUM_TEST} -b ${TEST_OPAMPATH} --data ${RESOURCE} --cpus ${NCPU}  --max ${SIM_TIME} --quanta ${TIME_QUANTA}
-${CMD_PREFIX} java -jar artifacts/OPAM.jar --runCnt ${NUM_RUNS} -b ${OPAMPATH} --data ${RESOURCE} --testPath ${TEST_OPAMPATH}/test.list --numTest ${NUM_TEST} --max ${SIM_TIME} --quanta ${TIME_QUANTA} --cpus ${NCPU}
+${CMD_PREFIX} java -jar artifacts/OPAM.jar --genTest Adaptive --numTest ${NUM_TEST} -b ${TEST_OPAMPATH} --data ${RESOURCE} --cpus ${NCPU} --max ${SIM_TIME} --quanta ${TIME_QUANTA}
+${CMD_PREFIX} java -jar artifacts/OPAM.jar --runCnt ${NUM_RUNS} -b ${OPAMPATH} --data ${RESOURCE} --testPath ${TEST_OPAMPATH}/test.list --numTest ${NUM_TEST} --cpus ${NCPU} --max ${SIM_TIME} --quanta ${TIME_QUANTA}
 
 # Execute SEQ (${NUM_RUNS} runs will be executed)
-${CMD_PREFIX} java -jar artifacts/OPAMjar --genTest Worst --numTest ${NUM_TEST} -b ${TEST_SEQPATH} --data ${RESOURCE} TIME_QUANTA--cpus ${NCPU} --max ${SIM_TIME} --quanta ${TIME_QUANTA} --timeLimit ${SEARCH_TIME}
-${CMD_PREFIX} java -jar artifacts/NSGA.jar --runCnt ${NUM_RUNS} -b ${SEQPATH} --data ${RESOURCE} --testPath ${TEST_SEQPATH}/test.list --numTest ${NUM_TEST} --max ${SIM_TIME} --quanta ${TIME_QUANTA} --cpus ${NCPU} TIME_QUANTA--timeLimit ${SEARCH_TIME}
+${CMD_PREFIX} java -jar artifacts/OPAMjar --genTest Worst --numTest ${NUM_TEST} -b ${TEST_SEQPATH} --data ${RESOURCE} --cpus ${NCPU} --max ${SIM_TIME} --quanta ${TIME_QUANTA} --timeLimit ${SEARCH_TIME}
+${CMD_PREFIX} java -jar artifacts/NSGA.jar --runCnt ${NUM_RUNS} -b ${SEQPATH} --data ${RESOURCE} --testPath ${TEST_SEQPATH}/test.list --numTest ${NUM_TEST} --cpus ${NCPU} --max ${SIM_TIME} --quanta ${TIME_QUANTA} --timeLimit ${SEARCH_TIME}
 
 
 ######################################################

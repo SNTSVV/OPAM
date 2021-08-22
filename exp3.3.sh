@@ -28,10 +28,10 @@ for ((control=2; control<=10; control+=1)); do
         RESOURCE="res/synthetics/${EXP_NAME}/${control}/taskset_${formatIDX}.csv"
 
         # Generate test arrivals (Adaptive random search)
-        ${CMD_PREFIX} java -jar artifacts/OPAM.jar --genTest Adaptive --numTest ${NUM_TEST} -b ${TESTPATH} --data ${RESOURCE} --max ${SIM_TIME} --quanta ${TIME_QUANTA}
+        ${CMD_PREFIX} java -jar artifacts/OPAM.jar --genTest Adaptive --numTest ${NUM_TEST} -b ${TESTPATH} --data ${RESOURCE} --cpus ${NCPU} --max ${SIM_TIME} --quanta ${TIME_QUANTA}
 
         # Execute OPAM (${NUM_RUNS} runs will be executed)
-        ${CMD_PREFIX} java -jar artifacts/OPAM.jar --runCnt ${NUM_RUNS} -b ${WORKPATH} --data ${RESOURCE} --testPath ${TESTPATH}/test.list --numTest ${NUM_TEST} --max ${SIM_TIME} --quanta ${TIME_QUANTA} --cpus ${NCPU} --maxMissed 1000
+        ${CMD_PREFIX} java -jar artifacts/OPAM.jar --runCnt ${NUM_RUNS} -b ${WORKPATH} --data ${RESOURCE} --testPath ${TESTPATH}/test.list --numTest ${NUM_TEST} --cpus ${NCPU} --max ${SIM_TIME} --quanta ${TIME_QUANTA} --maxMissed 1000
     done
 done
 
