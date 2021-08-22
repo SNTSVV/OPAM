@@ -4,7 +4,6 @@
 import os
 import math
 import statistics as st
-from scipy.stats import mannwhitneyu as utest
 from data.ResultFileLoader import ResultFileLoader
 
 

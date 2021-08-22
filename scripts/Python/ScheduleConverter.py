@@ -1,8 +1,5 @@
 import os
-import json
-import math
 from tqdm import tqdm
-from data.ranking import Ranking
 from data.ResultFileLoader import ResultFileLoader
 
 

@@ -14,10 +14,9 @@ OPAM runs on the following operating systems:
 
 
 ### OPAM requires the following tools:
-- Java 1.8.0.162  (Dependencies: jMetal 5.9, gson 2.8.6, commons-math3 3.6.1)
-- Python 3.7+     (Dependencies: tqdm)
-- R 4.1.0+        (Dependencies: effsize, scales, ggplot2, latex2exp, gridExtra)
-
+- Java 1.8.0.162  (Dependencies: see the file PriorityAssignment/pom.xml)
+- Python 3.7+     (Dependencies: see the file scripts/Python/requirements.txt)
+- R 4.1.0+        (Dependencies: see the file scripts/R/requirements.R)
 
 ### Repository description
 * *PriorityAssignment* : Containing Java source code of OPAM
