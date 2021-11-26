@@ -67,8 +67,13 @@
         </dependency>
     </dependencies>
 
+    <properties>
+        <outputJar>../artifacts</outputJar>
+    </properties>
 
     <build>
+        <directory>${project.basedir}/target</directory>
+        <finalName>Synthesizer</finalName>
         <plugins>
             <!-- set compiler version -->
             <plugin>
@@ -79,6 +84,59 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <!-- set how to resolve dependencies -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${project.build.directory}/libs
+                            </outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- set the way of creating jar file: assemble to a single jar file -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${outputJar}</outputDirectory>
+                            <archive>
+                                <manifest>
+                                    <mainClass>lu.uni.svv.PriorityAssignment.generator.TaskSetSynthesizer</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <appendAssemblyId>false</appendAssemblyId>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- set whether we pass the unit test: skip the unit test -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 

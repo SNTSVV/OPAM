@@ -18,13 +18,24 @@ OPAM runs on the following operating systems:
 - Python 3.7+     (Dependencies: see the file scripts/Python/requirements.txt)
 - R 4.1.0+        (Dependencies: see the file scripts/R/requirements.R)
 
+
 ### Repository description
 * *PriorityAssignment* : Containing Java source code of OPAM
-* *UPPAAL* : Containing the result of our preliminary experiment using UPPAAL
-* *artifacts*: Containing Java executable files
+* *UPPAAL* : Containing the result of our preliminary experiment using UPPAAL (uppaal64-4.1.24)
 * *res*: Containing input files - task descriptions
+* *scripts*: Containing script files to collect data and to generate graphs
+* *results*: Containing results files during all experiments
 * *settings.json*: Parameters for the Java executable files
 * **.sh*: Shell scripts for conducting experiments 
+
+### How to create OPAM executable jar files?
+Given the pre-configured POM files for Maven in the *PriorityAssignment* folder, you can create executable jar files that are used in the shell script files contained in this repository. Please execute the below commands in the *PriorityAssignment* folder.
+* *OPAM.jar*: mvn -f opam.pom -DoutputJar=../artifacts package
+* *OPAM-Ext.jar*: mvn -f opam.ext.pom -DoutputJar=../artifacts package
+* *QI.jar*: mvn -f qi.pom -DoutputJar=../artifacts package
+* *QI-Ext.jar*: mvn -f qi.ext.pom -DoutputJar=../artifacts package
+* *NSGA.jar*: mvn -f nsga.pom -DoutputJar=../artifacts package
+* *Synthesizer.jar*: mvn -f synthesizer.pom -DoutputJar=../artifacts package
 
 
 ### How to run OPAM?
