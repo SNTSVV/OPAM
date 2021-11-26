@@ -45,7 +45,7 @@ public class FitnessEvaluator {
         int simulationTime = calculateSimulationTime(input);
         PriorityProblem problem = new PriorityProblem(input, simulationTime, Settings.SCHEDULER);
 
-        run(Settings.BASE_PATH, problem, Settings.TEST_PATH, Settings.NUM_TEST,  Settings.OUTPUT_PATH);
+        run(Settings.BASE_PATH, problem, Settings.TEST_PATH, 0,  Settings.OUTPUT_PATH);
     }
 
     public static int calculateSimulationTime(TaskDescriptor[] input) throws Exception{
@@ -69,7 +69,7 @@ public class FitnessEvaluator {
 
     }
 
-    public static void run(String _basePath, PriorityProblem _problem, String _testPath, int _testCnt, String _outputName) throws Exception {
+    public static void run(String _basePath, PriorityProblem _problem, String _testPath, int _testSetCnt, String _outputName) throws Exception {
 
         String solutionFile = String.format("%s/_best_pareto.list", _basePath);
         List<PrioritySolution> solutions = loadSolutions(solutionFile, _problem);
@@ -87,13 +87,13 @@ public class FitnessEvaluator {
 
         //Re-evaluation
         System.out.print(String.format("[%s] Working with %s", _basePath, _testPath));
-        if (_testCnt==0){
+        if (_testSetCnt==0){
             System.out.print("...");
             String testFile = String.format("%s/test.list", _testPath);
             reEvaluate(1, writer, testFile, _problem, solutions);
         }
         else {
-            for (int setID = 1; setID <= _testCnt; setID++) {
+            for (int setID = 1; setID <= _testSetCnt; setID++) {
                 System.out.print(".");
                 String testFile = String.format("%s/Set%02d/test.list", _testPath, setID);
                 reEvaluate(setID, writer, testFile, _problem, solutions);
