@@ -86,10 +86,10 @@ ${CMD_PREFIX} ~/venv/bin/python3 scripts/Python/ResultCollector.py -t results/${
 #######################################################
 # Generate QI data
 #######################################################
-${CMD_PREFIX} java -jar artifacts/QI-Ext.jar --apprs OPAM,RS --compare1 ${OUTPUT}/fitness_OPAM_Adaptive10.csv --compare2 ${OUTPUT}/fitness_RS_Adaptive10.csv --output ${OUTPUT}/fitness_QI_Adaptive10.csv --runCnt 50 --numTest 1
-${CMD_PREFIX} java -jar artifacts/QI-Ext.jar --apprs OPAM,RS --compare1 ${OUTPUT}/fitness_OPAM_Random10.csv --compare2 ${OUTPUT}/fitness_RS_Random10.csv --output ${OUTPUT}/fitness_QI_Random10.csv --runCnt 50 --numTest 1
-${CMD_PREFIX} java -jar artifacts/QI-Ext.jar --apprs OPAM,RS --compare1 ${OUTPUT}/fitness_OPAM_Worst10.csv --compare2 ${OUTPUT}/fitness_RS_Worst10.csv --output ${OUTPUT}/fitness_QI_Worst10.csv --runCnt 50 --numTest 1
+${CMD_PREFIX} java -jar artifacts/QI-Ext.jar --apprs OPAM,RS --compare1 ${OUTPUT}/fitness_OPAM_Adaptive10.csv --compare2 ${OUTPUT}/fitness_RS_Adaptive10.csv --output ${OUTPUT}/fitness_QI_Adaptive10.csv --runCnt ${NUM_RUNS} --numTest 1
+${CMD_PREFIX} java -jar artifacts/QI-Ext.jar --apprs OPAM,RS --compare1 ${OUTPUT}/fitness_OPAM_Random10.csv --compare2 ${OUTPUT}/fitness_RS_Random10.csv --output ${OUTPUT}/fitness_QI_Random10.csv --runCnt ${NUM_RUNS} --numTest 1
+${CMD_PREFIX} java -jar artifacts/QI-Ext.jar --apprs OPAM,RS --compare1 ${OUTPUT}/fitness_OPAM_Worst10.csv --compare2 ${OUTPUT}/fitness_RS_Worst10.csv --output ${OUTPUT}/fitness_QI_Worst10.csv --runCnt ${NUM_RUNS} --numTest 1
 
-${CMD_PREFIX} java -jar artifacts/QI-Ext.jar --apprs OPAM,RS --compare1 ${OUTPUT}/fitness_OPAM_Adaptive500.csv --compare2 ${OUTPUT}/fitness_RS_Adaptive500.csv --output ${OUTPUT}/fitness_QI_Adaptive500.csv --runCnt 50 --numTest 1
-${CMD_PREFIX} java -jar artifacts/QI-Ext.jar --apprs OPAM,RS --compare1 ${OUTPUT}/fitness_OPAM_Random500.csv --compare2 ${OUTPUT}/fitness_RS_Random500.csv --output ${OUTPUT}/fitness_QI_Random500.csv --runCnt 50 --numTest 1
-${CMD_PREFIX} java -jar artifacts/QI-Ext.jar --apprs OPAM,RS --compare1 ${OUTPUT}/fitness_OPAM_Worst500.csv --compare2 ${OUTPUT}/fitness_RS_Worst500.csv --output ${OUTPUT}/fitness_QI_Worst500.csv --runCnt 50 --numTest 1
+${CMD_PREFIX} java -jar artifacts/QI-Ext.jar --apprs OPAM,RS --compare1 ${OUTPUT}/fitness_OPAM_Adaptive500.csv --compare2 ${OUTPUT}/fitness_RS_Adaptive500.csv --output ${OUTPUT}/fitness_QI_Adaptive500.csv --runCnt ${NUM_RUNS} --numTest 1
+${CMD_PREFIX} java -jar artifacts/QI-Ext.jar --apprs OPAM,RS --compare1 ${OUTPUT}/fitness_OPAM_Random500.csv --compare2 ${OUTPUT}/fitness_RS_Random500.csv --output ${OUTPUT}/fitness_QI_Random500.csv --runCnt ${NUM_RUNS} --numTest 1
+${CMD_PREFIX} java -jar artifacts/QI-Ext.jar --apprs OPAM,RS --compare1 ${OUTPUT}/fitness_OPAM_Worst500.csv --compare2 ${OUTPUT}/fitness_RS_Worst500.csv --output ${OUTPUT}/fitness_QI_Worst500.csv --runCnt ${NUM_RUNS} --numTest 1
