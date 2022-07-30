@@ -1,6 +1,7 @@
 package lu.uni.svv.PriorityAssignment.analysis;
 
 import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 import lu.uni.svv.PriorityAssignment.Initializer;
 import lu.uni.svv.PriorityAssignment.utils.GAWriter;
 import lu.uni.svv.PriorityAssignment.utils.Settings;
@@ -95,7 +96,7 @@ public class QIEvaluatorExt extends QIEvaluator {
 	 * @return
 	 * @throws IOException
 	 */
-	public HashMap<String, List<PointSolution>[]> load_fitness(String filename, int numTest, int runNum) throws IOException {
+	public HashMap<String, List<PointSolution>[]> load_fitness(String filename, int numTest, int runNum) throws IOException, CsvValidationException {
 
 		HashMap<String, List<PointSolution>[]> dset = new HashMap<>();
 		
